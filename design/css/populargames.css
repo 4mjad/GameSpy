@@ -1,0 +1,361 @@
+/*
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@600&display=swap');
+</style>
+*/
+
+html , body{
+  height:100%;           
+  width:100%;                                     /* This CSS code is for The fonts and the color of the HTML body*/
+  font-family: 'Poppins', sans-serif;
+  color:  #222
+}
+
+.navbar{
+  padding: .8rem;                                 /* This CSS code makes the nav bar thicker*/
+}
+
+.navbar-nav li {
+  padding-right: 20px;                            /* This CSS code makes the list items in the nav bar have greater distance*/
+}
+
+.nav-link {
+  font-size: 1.1em !important;                     /* This CSS code increases the font size in the css code*/
+}
+
+.carousel-inner img{
+  width: 100%;                                    /* This CSS code makes the carousel image full size*/
+  height: 100%
+}
+
+.carousel-caption{
+  position: absolute;
+  top:50%;                                         /* This CSS code makes the carousel  caption go up on the Y axis -50% centering the text to the midle of the image*/
+  transform: translateY(-50%);
+}
+
+
+.carousel-caption h1 {
+  font-size: 500%;                                 /* forces the carousel text to be uppercase also adds a shadow value to the text*/
+  text-transform: uppercase;
+  text-shadow: 1px 1px 15px #000;
+}
+
+.carousel-caption h3 {
+  font-size: 200%;
+  font-weight: 500;                                /* adds a shadow to the subheading of the carousel*/
+  text-shadow: 1px 1px 10px #000;
+  padding-bottom: 1rem;
+}
+
+.jumbotron{
+  padding: 1rem;                                    /* restricts jumbostron size to what it needs*/
+  border-radius: 0;
+}
+
+.jumbotron p.lead2 {
+    font-size: 30px;
+    text-align: center;
+}
+
+
+
+
+.padding{
+  padding-bottom: 2rem;                             /*Spaces out sections of the page to the bottom*/
+}
+
+.welcome {
+  width: 75%;
+  margin: 0 auto;                                  /*Adjusts the width of the welcome section*/
+  padding-top: 2rem;
+}
+.welcome hr{
+  border-top: 2px solid #b4b4b4;
+  width: 95%;                                      /* brings everything closer together in the welcome seciton*/
+  margin-top: .3rem;
+  margin-bottom: 1rem;
+}
+
+.sf1, .sf2, .sf3{
+  /* SF logo images if any change it needed */ 
+}
+
+.giff {
+  font-size: 150%;
+  width: 100%;
+  margin-bottom: 2rem;                            /* makes the button width 100% to cover the whole screen*/
+}
+
+.gif {
+  max-width: 100%;                                 /* makes the Gifs only their maxium size*/
+}
+
+.social a {
+  font-size: 4.6em;
+  padding: 3rem;                                    /* spaces out the social media icons*/
+}
+
+.fa-facebook{
+  color: #3b5998;                                  /* Facebook icon colour*/
+}
+
+.fa-twitter{
+  color: #00aced;                                  /* twitter icon colour*/
+}
+
+.fa-instagram{
+  color: #517fa4;                                  /* instagram icon colour*/
+}
+
+.fa-youtube{
+  color: #bb0000;                                  /* twitter icon colour*/
+}
+
+.fa-youtube:hover, .fa-twitter:hover, .fa-facebook:hover, .fa-instagram:hover{
+    color: #d5d5d5;                                                            /* chanegs the icons colour to grey when hovered over*/
+}
+
+
+footer {
+  background-color: #3f3f3f;
+  color: #d5d5d5;                                             /* Changes the footer colour*/
+  padding-top: 2rem;
+}
+
+hr.light {
+  border-top: 1px solid #d5d5d5;
+  width: 75%;
+  margin-top: .8rem;
+  margin-bottom: 1rem;
+}
+
+footer a {
+  color: #d5d5d5
+}
+hr.light-100 {
+  border-top: 1px solid #d5d5d5;
+  width: 100%;
+  margin-top: .8rem;                                           /* Changes the gap between certian parts of the webpage*/
+  margin-bottom: 1rem;
+}
+
+#timer {
+  font-size: 470%;                                           /*Makes the timer font size larger*/
+}
+
+
+#refresh{
+  width: 85%;
+  font-size: 155%;
+  margin-left: 70px;
+}
+
+
+#kura, #eth {
+
+  font-size: 120%;                                           /*Chnageing the captions in the video page*/
+
+}
+
+
+iframe {
+  border-width: 0;                                            /*frameborder changing for the youtube videos for w3 html compliance*/
+}
+
+
+.card-img-top-1{
+  max-width: 200px;
+  padding: 2rem;
+  text-align: center;
+  margin-left: 150px;
+  height: 200px;
+}
+
+
+
+
+
+/*---Media Queries --*/
+@media (max-width: 992px) {
+  .social a {
+    font-size: 4em;
+    padding: 2rem;
+  }
+  }
+@media (max-width: 768px) {
+
+.carousel-caption{
+  top: 40%;                                         /* changes the protperties of the carousel at this size */ 
+}
+
+
+.carousel-caption h1 {
+  font-size: 250%
+}
+
+.carousel-caption h3 {
+  font-size: 120%;
+  font-weight: 300;                                 /*changes the properties of the carousel text at this size*/
+  padding-bottom: .2rem;
+}
+
+.carousel-caption .btn {
+  font-size: 95%;
+  padding: 8px 14px;
+}
+
+.display-4 {
+  font-size: 200%;
+}
+  .social a {
+    font-size: 2.5em;
+    padding: 1.2rem;
+  }
+
+}
+@media (max-width: 576px) {
+  
+  .carousel-caption{
+  top: 40%;                                         /* changes the protperties of the carousel at this size */ 
+}
+
+
+.carousel-caption h1 {
+  font-size: 200%
+}
+
+.carousel-caption h3 {
+  font-size: 80%;                                   /*changes the properties of the carousel text at this size*/                            
+}
+
+.carousel-caption .btn {
+  font-size: 81%;
+  padding: 4px 8px;
+}
+
+.carousel-indicators {
+  display: none;
+}
+
+.display-4 {
+  font-size: 140%;
+}
+  .social a {
+    font-size: 2em;
+    padding: .7rem;
+  }
+
+}
+
+
+/*---Firefox Bug Fix --*/
+.carousel-item {
+  transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+}
+/*--- Fixed Background Image --*/
+figure {
+  position: relative;
+  width: 100%;
+  height: 60%;
+  margin: 0!important;
+}
+.fixed-wrap {
+  clip: rect(0, auto, auto, 0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+#fixed {
+  background-image: url('../images/gief.gif');
+  position: fixed;
+  display: block;
+  top: 0;                  
+  left: 0;
+  width: 100%;                                  /* This CSS code is for the fixed background image when scrolling down*/
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  will-change: transform;
+}                                                    
+
+
+/*--- Bootstrap Padding Fix --*/
+[class*="col-"] {
+    padding: 1rem;
+}
+
+
+/* Code for the table on the about page */
+
+ #Figther {
+     font-family: 'Josefin Sans', sans-serif;
+     border-collapse: collapse;
+     width: 100%;
+}
+ #Figther td, #Figther th {
+     border: 1px solid #ddd;
+     padding: 8px;
+}
+ #Figther tr:nth-child(even){
+    background-color: wheat;
+}
+ #Figther tr:hover {
+    background-color: red;
+}
+ #Figther th {
+     padding-top: 12px;
+     padding-bottom: 12px;
+     text-align: left;
+     background-color: black;
+     color: white;
+}
+
+.wrapper{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-140%);
+    background: rgba(0,0,0,0.6);
+    font-family: 'Comfortaa', cursive;
+    max-width: 800px;
+    width: 100%;
+    padding: 15px;
+    border-radius:10px;
+    display: flex;
+    justify-content: space-between;
+}
+.wrapper .input{
+    width: 100%;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.searchbtn{
+    background: #ffec00;
+    width: 10%;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+.searchbtn .fas{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 18 px;
+}

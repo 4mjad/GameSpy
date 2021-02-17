@@ -70,7 +70,8 @@ app.get('/search-result', function (req, res) {
          }
         ]).toArray(function(err, result) {
         if (err) throw err;
-        //ERROR WITH THE DISPLAY OF 2 COLLECTIONS CANNOT PRINT NAME BUT PRINTS PRICES FOR STEAM
+        //ERROR WITH THE DISPLAY OF 2 COLLECTIONS CANNOT PRINT NAME BUT PRINTS PRICES FOR STEAM. AND WE NEED TO FIGURE IT OUT
+
         //console.log(JSON.stringify(res));
         res.render('Game.ejs', {pagetitle:"Game",availablegame:result}); //diplays all books in the books collection of the database to the user
         db.close();

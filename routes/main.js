@@ -80,10 +80,6 @@ app.get('/search-result', function (req, res) {
 });
 
 
-
-
-
-
 app.get('/Game', function(req, res) { // get request to list page
       var MongoClient = require('mongodb').MongoClient;
       const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
@@ -98,10 +94,24 @@ app.get('/Game', function(req, res) { // get request to list page
 });
 })
 
-
 app.get('/populargames',function(req,res){
-   res.render("populargames.html");
+  res.render("populargames.html");
 });
+
+app.get('/register',function(req,res){
+  res.render("register.html");
+})
+
+//login route allows you to login
+app.get('/login',function(req,res){
+  res.render('login.html')
+});
+
+//handles the post request submitted by user that wants to login to their account on the page. It would ask for a username and password and check if the given information is in the database for that user and if it is correct if so it would allow user to login, if not it would tell user which information given is incorrect which maybe username or password.
+app.post('/loggedin', function (req,res) {
+  res.send("Logging you in")
+});
+
 
 
 }

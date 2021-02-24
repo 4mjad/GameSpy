@@ -1,0 +1,93 @@
+html , body{
+  height:100%;           
+  width:100%;                                     /* This CSS code is for The fonts and the color of the HTML body*/
+  font-family: 'Poppins', sans-serif;
+  color:  #222
+}
+
+.navbar{
+  padding: .8rem;                                 /* This CSS code makes the nav bar thicker*/
+}
+
+.navbar-nav li {
+  padding-right: 20px;                            /* This CSS code makes the list items in the nav bar have greater distance*/
+}
+
+.nav-link {
+  font-size: 1.1em !important;                     /* This CSS code increases the font size in the css code*/
+}
+
+/*used from group project code was adapted*/
+/* Global Styles */
+
+.form-group{
+  margin: 1rem;
+}
+
+
+/*ID styles*/
+#header-img {
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Utility Classes */
+.mar2 {
+  margin: 2rem;
+}
+.mar1 {
+  margin: 0.5rem;
+}
+.mar0 {
+  margin: 0.35rem;
+}
+.centred {
+  text-align: center;
+}
+
+/*Form Styles*/
+
+input[type=text], textarea {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid rgba(204, 204, 204, 1);
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: rgba(168,3,3,1);
+  color: white;
+}
+
+/* Element Styles */
+main {
+ margin-left: 8rem;
+ margin-right: 8rem;
+}
+
+button {
+  width: 100%;
+  background-color: rgba(168,3,3,1);
+  color: white;
+  padding: 30px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/*media queries*/
+@media (max-width:1000px){
+    body,icon-bar{
+        width:90%
+    }
+}
+
+/*mine that i learnt during lab */
+h2{
+    text-align: center;
+}
+
+
+

@@ -121,7 +121,7 @@ app.post('/registered', function (req,res) { // POST method route
         username: req.body.username,
         password: hashedPassword
       });
-      res.send('You are now registered, Your user name is: '+ req.body.name + ' your password is: '+ req.body.password +' and your hashed password is: '+ hashedPassword);  //sends response to user
+      res.send('You are now registered, Your user name is: '+ req.body.username + ' your password is: '+ req.body.password +' and your hashed password is: '+ hashedPassword);  //sends response to user
       client.close();
     })
   })
@@ -164,5 +164,10 @@ app.get('/login',function(req,res){
           })
         })
      });
+
+
+app.get('/Forum',function(req,res){
+  res.render('Forum.html')
+});
 
 }

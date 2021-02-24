@@ -1,4 +1,4 @@
- html , body{   height:100%;              width:100%;                                     /* This CSS code is for The fonts and the color of the HTML body*/   font-family: 'Poppins', sans-serif;   color: 
+html , body{   height:100%;              width:100%;                                     /* This CSS code is for The fonts and the color of the HTML body*/   font-family: 'Poppins', sans-serif;   color: 
 
  #222 }  .navbar{   padding: .8rem;                                 /* This CSS code makes the nav bar thicker*/ }  .navbar-nav li {   padding-right: 20px;                            /* This CSS code make
 
@@ -77,3 +77,5 @@ s: 50%;     background:#2f3640;     display: flex;  justify-content: center;    
 ng: border-box;         transition: .5s; } input[type = "text"]{        background: #fff;        }  .searchbtn {        color:black;    float: right;   width: 90px;    height: 60px;   border-radius: 50%; 
 
     display: flex;  justify-content: center;        align-items: center;     }  .Searchbox{         width: 680px; }
+
+

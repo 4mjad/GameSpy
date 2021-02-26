@@ -587,4 +587,153 @@ main{
     color: black;
   }
 
-  
+
+  h1:hover {
+ animation-name: colorShift;
+ animation-duration: 2s;
+ animation-iteration-count: infinite;
+}
+@keyframes colorShift {
+ 10% {
+ color: red;
+ }
+    20% {
+        color: chartreuse;
+    }
+        30% {
+        color: yellow;
+    }
+        40% {
+        color: magenta;
+    }
+        50% {
+        color: olive;
+    }
+        60% {
+        color: green;
+    }
+        70% {
+        color: aqua;
+    }
+        80% {
+        color: indianred;
+    }
+        90% {
+        color: firebrick;
+    }
+        100% {
+        color: lavender;
+    }
+}
+
+h2:hover {
+ animation-name: colorShift;
+ animation-duration: 2s;
+ animation-iteration-count: infinite;
+}
+@keyframes colorShift {
+ 10% {
+ color: red;
+ }
+    20% {
+        color: chartreuse;
+    }
+        30% {
+        color: yellow;
+    }
+        40% {
+        color: magenta;
+    }
+        50% {
+        color: olive;
+    }
+        60% {
+        color: green;
+    }
+        70% {
+        color: aqua;
+    }
+        80% {
+        color: indianred;
+    }
+        90% {
+        color: firebrick;
+    }
+        100% {
+        color: lavender;
+    }
+}
+h3:hover {
+  animation-name: colorShift;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+ }
+ @keyframes colorShift {
+  10% {
+  color: red;
+  }
+     20% {
+         color: chartreuse;
+     }
+         30% {
+         color: yellow;
+     }
+         40% {
+         color: magenta;
+     }
+         50% {
+         color: olive;
+     }
+         60% {
+         color: green;
+     }
+         70% {
+         color: aqua;
+     }
+         80% {
+         color: indianred;
+     }
+         90% {
+         color: firebrick;
+     }
+         100% {
+         color: lavender;
+     }
+ }
+ p:hover {
+ animation-name: colorShift;
+ animation-duration: 2s;
+ animation-iteration-count: infinite;
+}
+@keyframes colorShift {
+ 10% {
+ color: red;
+ }
+    20% {
+        color: chartreuse;
+    }
+        30% {
+        color: yellow;
+    }
+        40% {
+        color: magenta;
+    }
+        50% {
+        color: olive;
+    }
+        60% {
+        color: green;
+    }
+        70% {
+        color: aqua;
+    }
+        80% {
+        color: indianred;
+    }
+        90% {
+        color: firebrick;
+    }
+        100% {
+        color: lavender;
+    }
+}

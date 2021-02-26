@@ -1,9 +1,8 @@
-/*
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@600&display=swap');
 </style>
-*/
+
 
 html , body{
   height:100%;           
@@ -93,6 +92,7 @@ html , body{
 }
 
 .social a {
+	
   font-size: 4.6em;
   padding: 3rem;                                    /* spaces out the social media icons*/
 }
@@ -178,6 +178,7 @@ iframe {
 
 
 /*---Media Queries --*/
+/*
 @media (max-width: 992px) {
   .social a {
     font-size: 4em;
@@ -188,7 +189,6 @@ iframe {
 
 .carousel-caption{
   top: 40%;                                         /* changes the protperties of the carousel at this size */ 
-}
 
 
 .carousel-caption h1 {
@@ -214,7 +214,7 @@ iframe {
     padding: 1.2rem;
   }
 
-}
+
 @media (max-width: 576px) {
   
   .carousel-caption{
@@ -343,19 +343,248 @@ figure {
     border-radius: 5px;
     font-weight: bold;
 }
+	
 
-.searchbtn{
-    background: #ffec00;
-    width: 10%;
-    border-radius: 5px;
-    position: relative;
-    cursor: pointer;
+.search-txt {
+position: absolute;
+top: 50%;
+left: 35%;
+transform: translate(-50%,-50%);
+background: #2f3640;
+height: 40px;
+border-radius: 40px;
+padding: 10px;
+	
 }
 
-.searchbtn .fas{
+.search-box a{
+
+	color:red; 
+	float: right;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background:#2f3640;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+}
+
+.Searchbox{
+  width: 680px;
+  height: 50px;
+}
+
+
+
+input{
+	position: relative;
+	display: inline-block;
+	font-size: 20px;
+	box-sizing: border-box;
+	transition: .5s;
+}
+input[type = "text"]{
+	background: #fff;
+	
+}
+
+
+button{
+  width: 100%;
+  background-color: rgba(110, 109, 109);
+  color: white;
+  padding: 30px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/*Form Styles*/
+
+input[type=text1], textarea{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid rgba(204, 204, 204, 1);
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: rgb(110, 109, 109);
+    color: rgb(0, 0, 0);
+  }
+
+  /* Utility Classes */
+.mar2{
+  margin: 2rem;
+}
+.mar1{
+  margin: 0.5rem;
+}
+.mar0{
+  margin: 0.35rem;
+}
+.centred{
+  text-align: center;
+}
+
+.form-group{
+    margin: 1rem;
+}
+
+  /* Element Styles */
+main{
+    margin-left: 8rem;
+    margin-right: 8rem;
+}
+
+
+
+
+
+.loginbox{
+  width: 400px;
+  height: 450px;
+  background: rgb(133, 133, 133);
+  color: #ffffff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  box-sizing: border-box;
+  padding:80px;
+  border-radius: 10%;
+  z-index: -1;
+}
+
+.ava{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  top: -50px;
+  left: calc(50% - 50px);
+  top: calc(50% - 290px);
+}
+
+.loginbox p{
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+.loginbox input{
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.loginbox input[type="text3"],[type = "password"]
+{
+  border: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  height: 50px;
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+}
+
+.loginbox input[type="submit"]
+{
+  border: none;
+  outline: none;
+  height: 40px;
+  background: #000;
+  color:#fff;
+  border-radius: 20px;
+}
+
+.loginbox input[type="submit"]:hover
+{
+  cursor: pointer;
+  background: #555353;
+  color: rgb(133, 133, 133)
+}
+
+.loginbox a{
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 20px;
+  color: black;
+}
+
+
+.ava2{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
     position: absolute;
+    top: -50px;
+    left: calc(50% - 50px);
+    top: calc(50% - 370px);
+  }
+
+  .registerbox{
+    width: 400px;
+    height: 620px;
+    background: rgb(133, 133, 133);
+    color: #ffffff;
     top: 50%;
     left: 50%;
+    position: absolute;
     transform: translate(-50%,-50%);
-    font-size: 18 px;
-}
+    box-sizing: border-box;
+    padding:80px;
+    border-radius: 10%;
+    z-index: -1;
+  }
+
+    .registerbox p{
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+  }
+  
+  .registerbox input{
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .registerbox input[type="text4"],[type = "password"]
+  {
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 30px;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+  }
+  
+  .registerbox input[type="submit"]
+  {
+    border: none;
+    outline: none;
+    height: 40px;
+    background: rgb(34, 33, 33);
+    color:#fff;
+    border-radius: 20px;
+  }
+  
+  .registerbox input[type="submit"]:hover
+  {
+    cursor: pointer;
+    background: #555353;
+    color: #fff;
+  }
+  
+  .registerbox a{
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 20px;
+    color: black;
+  }
+
+  

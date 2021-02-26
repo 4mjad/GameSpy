@@ -33,49 +33,45 @@ app.get('/search',function(req,res){
         res.render("search.html");
      });
 
-app.get('/search-result', function (req, res) {
-   var MongoClient = require('mongodb').MongoClient; //retrieve
-   var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test"; // set url
-   
-   // MongoClient.connect(url, function(err, client) {
-   //    var db = client.db("GameSpy");
-   //    db.collection('Steam').aggregate([
-   //       { $lookup:
-   //          {
-   //             from: 'GOG',
-   //             localField: '_id',
-   //             foreignField: '_id',
-   //             as: 'name'
-   //          }
-   //       }
-   //    ]).toArray(function(findErr, results) {
-   //       if(findErr) throw findErr // outputs error
-   //       else
-   //   //res.render('list.ejs', {availablebooks:results}); // otherwise produce output
-   //   console.log(JSON.stringify(res));
-   //       client.close(); // closes all open connections
-   //    });
-   // });
-   MongoClient.connect(url, function(err, db) {
-      if (err) throw err;
-      var dbo = db.db("GameSpy");
-      dbo.collection('Steam').aggregate([
-        { $lookup:
-           {
-             from: 'GOG',
-             localField: '_id',
-             foreignField: '_id',
-             as: 'name'
-           }
-         }
-        ]).toArray(function(err, result) {
-        if (err) throw err;
-        //ERROR WITH THE DISPLAY OF 2 COLLECTIONS CANNOT PRINT NAME BUT PRINTS PRICES FOR STEAM. AND WE NEED TO FIGURE IT OUT
+// app.get('/search-result', function (req, res) {
+//    var MongoClient = require('mongodb').MongoClient; //retrieve
+//    var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test"; // set url
+//    MongoClient.connect(url, function(err, db) {
+//       if (err) throw err;
+//       var dbo = db.db("GameSpy");
+//       dbo.collection('Steam').aggregate([
+//         { $lookup:
+//            {
+//              from: 'GOG',
+//              localField: req.query.keyword,
+//              foreignField: req.query.keyword,
+//             //  pipeline: [],
+//              as: 'same'
+//            }
+//          },
 
-        //console.log(JSON.stringify(res));
-        res.render('Game.ejs', {pagetitle:"Game",availablegame:result}); //diplays all books in the books collection of the database to the user
-        db.close();
-      });
+//         ]).toArray(function(err, result) {
+//         if (err) throw err;
+//         //console.log(JSON.stringify(res));
+//         res.render('Game.ejs', {pagetitle:"Game",availablegame:result}); //diplays all books in the books collection of the database to the user
+//         db.close();
+//       });
+//     });
+// });
+
+
+app.get('/search-result', function (req, res) {
+      var MongoClient = require('mongodb').MongoClient; //retrieve
+       var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test"; // set url
+      MongoClient.connect(url, function (err, client) { //connect to the db
+      if(err) throw err;
+       var db = client.db('GameSpy'); // name of db
+       db.collection('Steam').find({name:{$regex:new RegExp(req.query.keyword,"i")}}).toArray((findErr, results) => { // finds name of books with specific key words
+      if(findErr) throw findErr // outputs error
+      else
+        res.render('list.ejs', {availablebooks:results}); // otherwise produce output
+          client.close(); // closes all open connections
+     });
     });
 });
 

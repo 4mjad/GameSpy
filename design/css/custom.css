@@ -1,3 +1,5 @@
+
+/* MB CODE */
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@600&display=swap');
@@ -8,11 +10,15 @@ html , body{
   height:100%;           
   width:100%;                                     /* This CSS code is for The fonts and the color of the HTML body*/
   font-family: 'Poppins', sans-serif;
-  color:  #222
+  color:  #222;
+}
+
+body{
+  background-color: #ffffffc0;
 }
 
 .navbar{
-  padding: .8rem;                                 /* This CSS code makes the nav bar thicker*/
+  padding: .8rem;                             /* This CSS code makes the nav bar thicker*/
 }
 
 .navbar-nav li {
@@ -119,7 +125,7 @@ html , body{
 
 
 footer {
-  background-color: #3f3f3f;
+  background-color: rgb(108, 117, 125);
   color: #d5d5d5;                                             /* Changes the footer colour*/
   padding-top: 2rem;
 }
@@ -442,6 +448,8 @@ main{
 
 
 
+
+/* OG */
 
 
 .loginbox{

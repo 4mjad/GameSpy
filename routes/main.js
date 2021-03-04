@@ -139,4 +139,21 @@ app.get('/Forum',function(req,res){
   res.render('Forum.html')
 });
 
+//get method route
+app.get('/gamepage', function(req, res) {
+  //use mongo
+  var MongoClient = require('mongodb').MongoClient;
+  var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+  MongoClient.connect(url, function (err, client) {
+          if (err) throw err;
+          var db = client.db('GameSpy');
+          db.collection('ALL').find().toArray((findErr, results) => {
+          if (findErr) throw findErr;
+          else
+          res.render('gamepage.ejs', {gametitle: " Appid ", pageText: " description: This is the Counter Stirke Global Offense Number Of people playing it concurrently", appid: "780"});
+          client.close();                                                                                                                                                                                   
+          });
+ });
+});
+
 }

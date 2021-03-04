@@ -1,9 +1,9 @@
-//12th Commit
+//13th Commit
 var express = require ('express')
 var bodyParser = require ('body-parser') // extract the body of an incoming request stream and exposes it
 const port = 8000 // access url port number
 const app = express() // module with functions or objects or variables assigned to it
-                                                                                                                                                                                                                                                                                                                                                                   
+
 app.use(bodyParser.urlencoded({ extended: true })) // middleware for parsing bodies from url 
 
 
@@ -20,6 +20,19 @@ mongoose.connection
  console.warn('Warning', error);
 
  });
+
+
+//  var BlogSchema = new mongooseSchema({
+//   title: { type: String, es_indexed: true },
+//   blog_text: { type: String, es_indexed: true },
+//   author_name: { type: String, es_indexed: true },
+//   sequence_num: Number,
+//   category: { type: String, es_indexed: true },
+//   created_at: { type: Date, default: Date.now },
+//   modified_at: { type: Date, default: Date.now },
+//   is_verified: { type: Boolean, es_indexed: true }
+// });
+
 
 // Express web server                                                                                                                                                                                                            
 

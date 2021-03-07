@@ -169,25 +169,25 @@ app.get('/gamepage', function(req, res) {
           if (findErr) throw findErr;
           else
           res.render('gamepage.ejs', {gametitle: " Appid ", pageText: " description: This is the Counter Stirke Global Offense Number Of people playing it concurrently", appid: "780",  availablegame:results});
-          //client.close();                                                                                                                                                                     
+          client.close();                                                                                                                                                                     
           });
  });
 });
 
-app.post('/reviwed', function (req,res) { // POST method route
-  // saving data in database
-  var MongoClient = require('mongodb').MongoClient;      
-  const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
-    MongoClient.connect(url, function(err, client) {
-    if(err) throw err;
-    var db = client.db ('GameSpy');
-      db.collection('reviwes').insertOne({ // collection and documents
-        postive: req.body.postive,
-        negative: req.body.negative
-      });
-      res.send('You');  //sends response to user
-      client.close();
-    })
-  })
+// app.post('/reviwed', function (req,res) { // POST method route
+//   // saving data in database
+//   var MongoClient = require('mongodb').MongoClient;      
+//   const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function(err, client) {
+//     if(err) throw err;
+//     var db = client.db ('GameSpy');
+//       db.collection('reviwes').insertOne({ // collection and documents
+//         postive: req.body.postive,
+//         negative: req.body.negative
+//       });
+//       res.send('You');  //sends response to user
+//       client.close();
+//     })
+//   })
 
 }

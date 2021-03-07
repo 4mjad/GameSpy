@@ -139,6 +139,24 @@ app.get('/Forum',function(req,res){
   res.render('Forum.html')
 });
 
+app.post('/Complained',function(req,res){
+  // saving data in database
+  var MongoClient = require('mongodb').MongoClient;      
+  const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+  //Store hashed password in your database.
+    MongoClient.connect(url, function(err, client) {
+    if(err) throw err;
+    var db = client.db ('GameSpy');
+      db.collection('Complaints').insertOne({ // collection and documents
+        Email: req.body.email,
+        Subject: req.body.subject,
+        Message: req.body.message,
+      });
+      res.send("Your Email is: " + req.body.email + "The subject of the issue is: " + req.body.subject + "The message you are sending is: " + req.body.message);  //sends response to user
+      client.close();
+    })
+})
+
 //get method route
 app.get('/gamepage', function(req, res) {
   //use mongo
@@ -150,10 +168,26 @@ app.get('/gamepage', function(req, res) {
           db.collection('ALL').find().toArray((findErr, results) => {
           if (findErr) throw findErr;
           else
-          res.render('gamepage.ejs', {gametitle: " Appid ", pageText: " description: This is the Counter Stirke Global Offense Number Of people playing it concurrently", appid: "780"});
-          client.close();                                                                                                                                                                                   
+          res.render('gamepage.ejs', {gametitle: " Appid ", pageText: " description: This is the Counter Stirke Global Offense Number Of people playing it concurrently", appid: "780",  availablegame:results});
+          //client.close();                                                                                                                                                                     
           });
  });
 });
+
+app.post('/reviwed', function (req,res) { // POST method route
+  // saving data in database
+  var MongoClient = require('mongodb').MongoClient;      
+  const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+    MongoClient.connect(url, function(err, client) {
+    if(err) throw err;
+    var db = client.db ('GameSpy');
+      db.collection('reviwes').insertOne({ // collection and documents
+        postive: req.body.postive,
+        negative: req.body.negative
+      });
+      res.send('You');  //sends response to user
+      client.close();
+    })
+  })
 
 }

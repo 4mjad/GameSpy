@@ -13,8 +13,15 @@ html , body{
   color:  #222;
 }
 
+h1,h2,h3,p,h4{
+  color: white;
+}
+
+
+
 body{
-  background-color: #ffffffc0;
+  /* background-color: #ffffffc0; */
+  background: url(https://images.wallpaperscraft.com/image/fractal_abstraction_shine_130229_3000x3000.jpg);
 }
 
 .navbar{
@@ -138,7 +145,7 @@ hr.light {
 }
 
 footer a {
-  color: #d5d5d5
+  color: #6c757d
 }
 hr.light-100 {
   border-top: 1px solid #d5d5d5;
@@ -214,6 +221,8 @@ iframe {
 
 .display-4 {
   font-size: 200%;
+  color: white;
+  text-align: center;
 }
   .social a {
     font-size: 2.5em;
@@ -419,7 +428,10 @@ input[type=text1], textarea{
     border-radius: 4px;
     box-sizing: border-box;
     background-color: rgb(110, 109, 109);
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+  }
+  label,::placeholder{
+    color: white;
   }
 
   /* Utility Classes */
@@ -431,7 +443,8 @@ input[type=text1], textarea{
 }
 .mar0{
   margin: 0.35rem;
-}
+} 
+
 .centred{
   text-align: center;
 }
@@ -495,7 +508,7 @@ main{
   background: transparent;
   outline: none;
   height: 50px;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   font-size: 16px;
 }
 
@@ -567,7 +580,7 @@ main{
     background: transparent;
     outline: none;
     height: 30px;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     font-size: 16px;
   }
   
@@ -594,3 +607,104 @@ main{
     line-height: 20px;
     color: black;
   }
+
+
+
+
+
+
+  .headin{
+    text-align:center;
+    color: rgba(255,255,255,1);
+    margin: 30px;
+    display: block;
+}
+
+.ptable table{
+	margin: auto auto;
+	border-collapse: collapse;
+}
+
+.ptable{
+	margin: 0px 0% 5px 0%;
+}
+
+td {
+    padding: 5px;
+}
+
+td {
+        width:25%;
+}
+
+td{
+	background-color: rgb(110, 109, 109);
+}
+th{
+  color:white;
+}
+
+.row{
+	text-align: left;
+}
+
+.row td{
+	color: #cacaca;
+}
+
+.wpos{
+    text-align: left;
+}
+
+.wpos td{
+    color:rgb(255, 255, 255);
+}
+
+
+table .col{
+	border-bottom: 1px solid #FFFFFF;
+    background-color: rgb(43, 41, 87);
+    text-align: left;
+}
+
+.wpos:hover td{
+	background-color:rgb(43, 41, 87);;
+}
+
+
+/* Autocomplete */
+
+.autocomplete {
+  position: relative;
+  display: inline-block;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #e9e9e9; 
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}

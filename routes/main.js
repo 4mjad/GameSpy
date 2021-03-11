@@ -173,6 +173,45 @@ app.get('/gamepage', function(req, res) {
           });
  });
 });
+app.get('/complaints',function(req,res) {
+  var MongoClient = require('mongodb').MongoClient;
+  const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+  MongoClient.connect(url, function (err, client) {
+  if (err) throw err;
+  var db = client.db('GameSpy');
+  db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+  if (findErr) throw findErr;
+  else
+     res.render('complaints.ejs', {availablebooks:results});
+  client.close();
+});
+});
+})
+
+app.post('/deleted', function (req,res) {
+  var MongoClient = require('mongodb').MongoClient;
+  const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+  MongoClient.connect(url, function (err, client) {
+if(err) throw err;
+var db = client.db ('GameSpy');
+//Checks if the user name is in the databse
+db.collection('Complaints').findOne({name:req.body._id},function(findErr, result){
+if(findErr) throw findErr;
+//runs the if statement if null is not returned
+if(result!= null)
+ {
+    //deletes the document that has username same as the name written in the webpage
+    db.collection('Complaints').deleteOne({name:req.body._id},function(err, results){
+    res.send('User deleted' + '<br />'+'<a href='+'./'+'>Home</a>');
+ })
+}
+else{
+//if failed it returns invalid username
+res.send('Invalid User name' + '<br />'+'<a href='+'./'+'>Home</a>');
+ }
+});
+});
+});
 
 // app.post('/reviwed', function (req,res) { // POST method route
 //   // saving data in database

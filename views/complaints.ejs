@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Complaint!</title>
+    <link rel = "stylesheet" type = "text/css" href="css/custom.css"/>
+  </head>
+  <body style="background-color:white";>
+    <h1> This is Complaint Page </h1>
+     
+    <ul>
+        <div class="ptable">
+        <table class="table">
+            <tr class="col">
+                <th>_Id</th>
+                <th>Email</th>
+                <th>Subject</th>
+                <th>Message</th>
+            </tr>
+            <% availablebooks.forEach(function(book){ %>
+            <tr class="wpos">
+                <td><%= book._id %></td>
+                <td><%= book.Email %></td>
+                <td><%= book.Subject %></td>
+                <td><%= book.Message %></td>
+            </tr>
+   </div>
+ </ul>
+   <% }) %>
+
+   <form method="POST" action="/deleted">
+    <h4>Please write the name of the id you want deleted</h4>
+    <label for= "id"><b>ID:</b></label>
+    <input id="id" type="text4" name="id" placeholder="ID" />
+    <br></br>
+    <input type="submit" name="delete"/>
+</form>
+   
+
+  </body>

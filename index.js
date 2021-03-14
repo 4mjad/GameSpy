@@ -1,8 +1,16 @@
-//16th Commit
+//17th Commit
 var express = require ('express')
 var bodyParser = require ('body-parser') // extract the body of an incoming request stream and exposes it
 const port = 8000 // access url port number
 const app = express() // module with functions or objects or variables assigned to it
+
+
+// JSON
+const fs = require('fs');
+const data = fs.readFileSync('list.json');
+const gamename = JSON.parse(data);
+console.log(gamename);
+////
 
 app.use(bodyParser.urlencoded({ extended: true })) // middleware for parsing bodies from url 
 

@@ -23,36 +23,21 @@
 
             <h3>You can see names and prices of all available books at our book shop here:</h3>
             <ul>
-         <div class="ptable">
-         <table class="table">
-             <tr class="col">
-                 <th>Game Name</th>
-                 <!-- <th>|</th>
-                 <th> </th>
-                 <th> </th>
-                 <th>| </th>
-                 <th> </th>
-                 <th> </th> -->
-                 <th>Game Price</th>
-             </tr>
-             <% availablebooks.forEach(function(book){ %>
-             <tr class="wpos">
-                 <td><%= book.name %></td>
-                 <!-- <td>|</td> -->
-                 <!-- <td> </td>
-                 <th> </th>
-                 <th>|</th>
-                 <th> </th>
-                 <th> </th> -->
-                 
-                 <td><%= book.price %></td>
-             </tr>
-    </div>
-  </ul>
-    <% }) %>
-
-
-
+              <div class="ptable">
+                <table class="table">
+                  <tr class="col">
+                    <th>Game Name</th>
+                    <th>Game Price</th>
+                  </tr>
+                  <% availablebooks.forEach(function(book){ %>
+                    <tr class="wpos">
+                      <td><a href="<%= book.name %>"> <%= book.name %></a></td>
+                      <td><%= book.price %></td>
+                    </tr>
+                  </div>
+                </ul>
+                <% }) %>
+                <!-- <a href="book.name">book.name</a> -->
   </body>
 
 <a href='./'>Home</a>

@@ -6,7 +6,7 @@ app.get('/list', function(req, res) { // get request to list page
       MongoClient.connect(url, function (err, client) {
       if (err) throw err;
       var db = client.db('GameSpy');
-      db.collection('Steam').find().toArray((findErr, results) => { // produces all available books
+      db.collection('ALL').find().toArray((findErr, results) => { // produces all available books
       if (findErr) throw findErr;
       else
          res.render('list.ejs', {availablebooks:results});
@@ -158,7 +158,7 @@ app.post('/Complained',function(req,res){
 })
 
 //get method route
-app.get('/gamepage', function(req, res) {
+app.get('/Counter-Strike', function(req, res) {
   //use mongo
   var MongoClient = require('mongodb').MongoClient;
   var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
@@ -173,6 +173,25 @@ app.get('/gamepage', function(req, res) {
           });
  });
 });
+
+// //get method route
+// app.get('/Counter-Strike%20Nexon:%20Zombies', function(req, res) {
+//   //use mongo
+//   var MongoClient = require('mongodb').MongoClient;
+//   var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//   MongoClient.connect(url, function (err, client) {
+//           if (err) throw err;
+//           var db = client.db('GameSpy');
+//           db.collection('ALL').find().toArray((findErr, results) => {
+//           if (findErr) throw findErr;
+//           else
+//           res.render('gamepage.ejs', {gametitle: " Appid ", pageText: " description: This is the Counter Stirke Global Offense Number Of people playing it concurrently", appid: "780",  availablegame:results});
+//           client.close();                                                                                                                                                                     
+//           });
+//  });
+// });
+
+
 app.get('/complaints',function(req,res) {
   var MongoClient = require('mongodb').MongoClient;
   const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";

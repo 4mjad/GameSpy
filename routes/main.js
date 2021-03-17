@@ -172,24 +172,41 @@ app.get('/Counter-Strike', function(req, res) {
           client.close();                                                                                                                                                                     
           });
  });
-});
-
-// //get method route
-// app.get('/Counter-Strike%20Nexon:%20Zombies', function(req, res) {
-//   //use mongo
-//   var MongoClient = require('mongodb').MongoClient;
-//   var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
-//   MongoClient.connect(url, function (err, client) {
-//           if (err) throw err;
-//           var db = client.db('GameSpy');
-//           db.collection('ALL').find().toArray((findErr, results) => {
-//           if (findErr) throw findErr;
-//           else
-//           res.render('gamepage.ejs', {gametitle: " Appid ", pageText: " description: This is the Counter Stirke Global Offense Number Of people playing it concurrently", appid: "780",  availablegame:results});
-//           client.close();                                                                                                                                                                     
-//           });
-//  });
+// const request = require('request');
+          
+// let city = 'req.body.name';
+// let url = `http://localhost:8000/api`
+             
+// request(url, function (err, response, body) {
+//   if(err){
+//     console.log('error:', error);
+//   } else {
+//     var gamepage = JSON.parse(body)
+//     var wmsg = 'It is '+ gamepage.name + ' degrees shit in '+ gamepage.price +'! <br> humidity now is:'+ gamepage._id;
+//     res.send (wmsg);
+//   } 
 // });
+});   
+//------------------
+
+
+
+//get method route
+app.get('/Counter-Strike%20Nexon:%20Zombies', function(req, res) {
+  //use mongo
+  var MongoClient = require('mongodb').MongoClient;
+  var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+  MongoClient.connect(url, function (err, client) {
+          if (err) throw err;
+          var db = client.db('GameSpy');
+          db.collection('ALL').find().toArray((findErr, results) => {
+          if (findErr) throw findErr;
+          else
+          res.render('gamepage.ejs', {gametitle: " Appid ", pageText: " description: This is the Counter Stirke Global Offense Number Of people playing it concurrently", appid: "780",  availablegame:results});
+          client.close();                                                                                                                                                                     
+          });
+ });
+});
 
 
 app.get('/complaints',function(req,res) {
@@ -248,4 +265,22 @@ res.send('Invalid User name' + '<br />'+'<a href='+'./'+'>Home</a>');
 //     })
 //   })
 
+//------------------
+app.get('/api', function (req,res) {
+     var MongoClient = require('mongodb').MongoClient;
+     var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+     MongoClient.connect(url, function (err, client) {
+     if (err) throw err                                                                                                                                                
+     var db = client.db('GameSpy');                                                                                                                                                                   
+      db.collection('ALL').find().toArray((findErr, results) => {                                                                                                                                
+      if (findErr) throw findErr;
+      else
+         res.json(results);                                                                                                                                              
+  });
+});
+});
+
+
+
 }
+

@@ -56,7 +56,7 @@ module.exports = function (app) // this file has been exported as a function
       db.collection('ALL').find({ name: { $regex: new RegExp(req.query.keyword, "i") } }).toArray((findErr, results) => { // finds name of books with specific key words
         if (findErr) throw findErr // outputs error
         else
-          res.render('list.ejs', { availablegame: results }); // otherwise produce output
+          res.render('gamepage.ejs', { gametitle: req.query.keyword, availablegame: results }); // otherwise produce output
         client.close(); // closes all open connections
       });
     });
@@ -278,20 +278,21 @@ module.exports = function (app) // this file has been exported as a function
   })
 
 
-  app.post('/deleted', [check('id').notEmpty()], function (req, res) {
+  app.post('/deleted', [check('_id').notEmpty()], function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
     MongoClient.connect(url, function (err, client) {
       if (err) throw err;
       var db = client.db('GameSpy');
-      db.collection('Complaints').findOne({ name: req.body._id }, function (findErr, result) {
+      db.collection('Complaints').findOne({ _id: req.body._id }, function (findErr, result) {
         if (findErr) throw findErr;
+        const errors = validationResult(req);
         if (!errors.isEmpty()) {
           res.redirect('./complaints');
         }
         else {
           if (result != null) {
-            db.collection('Complaints').deleteOne({ name: req.body._id }, function (err, results) {
+            db.collection('Complaints').deleteOne({ _id: req.body._id }, function (err, results) {
               res.send('User deleted' + '<br />' + '<a href=' + './' + '>Home</a>');
             })
           }
@@ -302,6 +303,8331 @@ module.exports = function (app) // this file has been exported as a function
       });
     });
   });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
+
+
+
+
+
+//   app.get('/complaints', redirectLogin, function (req, res) {
+//     var MongoClient = require('mongodb').MongoClient;
+//     const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+//     MongoClient.connect(url, function (err, client) {
+//       if (err) throw err;
+//       var db = client.db('GameSpy');
+//       db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
+//         if (findErr) throw findErr;
+//         else
+//           res.render('complaints.ejs', { availableuser: results });
+//         client.close();
+//       });
+//     });
+//   })
+
+// //post method route
+// app.post('/deleted', function(req, res){
+
+// //use mongo
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+// MongoClient.connect(url, function(err, client) {
+//   if (err) throw err;
+// //use book shop db
+//   var db = client.db ('GameSpy');
+//   //find input user name ib database
+//   db.collection('Complaints').findOne ({_id: req.body._id}, function(findErr, result) {
+//       if (findErr) throw findErr;
+// if (result != null) {
+//   //if result found delete the user
+//   db.collection('Complaints').deleteOne ({_id: req.body._id}, function(err, result) {
+//       res.send("User Deleted" + '<br />'+'<a href='+'./'+'>Home</a>');
+//   })
+// }
+// else {  //if not found return invalid
+//   res.send("Invalid User" + '<br />'+'<a href='+'./'+'>Home</a>');
+// }
+//   });
+// });
+// });
 
 
   app.get('/logout', redirectLogin, (req, res) => {

@@ -6,16 +6,27 @@
                <h1><%= gametitle %></h1>
                     <body>
                          <h3>Game decription</h3>
-                         <%= pageText %>
                          <p>Game deatails <%= gametitle %> </p>
                          <ul>
                                                                                                                                                                                                                    
                                 <iframe src="https://steamdb.info/embed/?appid=730" height="389" style="border:0;overflow:hidden;width:100%"></iframe>
                          </ul>
 
-                         <!-- <% availablegame.forEach(function(game){ %>
-                              <li><%= game.negative_rating %>, <%= game.positive_ratings %></li>
-                             <% }) %> -->
+                         <ul>
+                              <% availablegame.forEach(function(game){ %>
+                              <li><%= game.name %>, £<%= game.price %></li>
+
+                         </ul>
+
+                         <p><%= game.positive_ratings %></p>
+
+
+
+
+
+
+                             <% }) %>
+                         
 
                          <!-- <form method="POST" action="/reviwed">
                               <input type="checkbox" id="postive" name="postive" value="1">

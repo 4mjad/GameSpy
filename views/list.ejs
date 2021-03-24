@@ -4,7 +4,7 @@
   <title>List webpage!</title>
   <link rel="stylesheet" type="text/css" href="css/custom.css" />
 </head>
-<body style="background-color:white" ;>
+<body style="background-color:white";>
   <h1> This is List Page </h1>=
   <h3>You can see names and prices of all available books at our book shop here:</h3>
   <ul>
@@ -17,15 +17,16 @@
         <% availablegame.forEach(function(game){ %>
           <tr class="wpos">
             <td><a href="<%= game.name %>">
-                <%= game.name %>
-              </a></td>
+                <%= game.name %></a>
+              </td>
             <td>
               <%= game.price %>
             </td>
           </tr>
+          <% }) %>
+      </table>
     </div>
   </ul>
-  <% }) %>
     <!-- <a href="game.name">game.name</a> -->
 </body>
 <a href='./'>Home</a>

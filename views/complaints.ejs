@@ -1,39 +1,48 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Complaint!</title>
-    <link rel = "stylesheet" type = "text/css" href="css/custom.css"/>
-  </head>
-  <body style="background-color:white";>
-    <h1> This is Complaint Page </h1>
-     
-    <ul>
-        <div class="ptable">
-        <table class="table">
-            <tr class="col">
-                <th>_Id</th>
-                <th>Email</th>
-                <th>Subject</th>
-                <th>Message</th>
-            </tr>
-            <% availableuser.forEach(function(user){ %>
-            <tr class="wpos">
-                <td><%= user._id %></td>
-                <td><%= user.Email %></td>
-                <td><%= user.Subject %></td>
-                <td><%= user.Message %></td>
-            </tr>
-   </div>
- </ul>
-   <% }) %>
-
-   <form method="POST" action="/deleted">
-    <h4>Please write the name of the id you want deleted</h4>
-    <label for= "_id"><b>ID:</b></label>
-    <input id="_id" type="text4" name="_id" placeholder="_id" />
-    <br></br>
-    <input type="submit" name="delete"/>
-</form>
+<head>
+  <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Complaint!</title>
+  <link rel = "stylesheet" type = "text/css" href="/css/custom.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<!-- <link href="css/custom.css" rel="stylesheet"> -->
+	<script src="js/js.js"></script>
+	<script src="https://unpkg.com/scrollreveal"></script>
+</head>
+<body style="background-color:white";>
+  <h1> This is Complaint Page </h1>
    
+  <ul>
+      <div class="ptable">
+      <table class="table">
+          <tr class="col">
+              <th>_Id</th>
+              <th>Email</th>
+              <th>Subject</th>
+              <th>Message</th>
+          </tr>
+          <% availablegame.forEach(function(game){ %>
+          <tr class="wpos">
+              <td><%= game._id %></td>
+              <td><%= game.Email %></td>
+              <td><%= game.Subject %></td>
+              <td><%= game.Message %></td>
+          </tr>
+          <% }) %>
+          </table>
+          </div>
+  </ul>
 
-  </body
+   <form class="centered" method="POST" action="/deleted">
+    <div class="form-group1">
+      <label for="email">Email: </label>
+      <input type="text1" id="email" name="email" placeholder="email"><br />
+    </div>
+    <button class = "button forumbtn" type="submit1">Submit</button>
+    </form>
+</body>
+</html>

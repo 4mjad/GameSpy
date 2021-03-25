@@ -256,6 +256,7 @@ iframe {
 
 .display-4 {
   font-size: 140%;
+  color: white;
 }
   .social a {
     font-size: 2em;
@@ -339,7 +340,7 @@ figure {
 
 .wrapper{
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%,-140%);
     background: rgba(0,0,0,0.6);
@@ -369,7 +370,17 @@ background: #2f3640;
 height: 40px;
 border-radius: 40px;
 padding: 10px;
-	
+}
+
+.searchbtn {
+	color:black; 
+	float: right;
+	width: 90px;
+	height: 60px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .search-box a{
@@ -388,7 +399,7 @@ padding: 10px;
 
 .Searchbox{
   width: 680px;
-  height: 50px;
+  height: 60px;
 }
 
 
@@ -406,7 +417,7 @@ input[type = "text"]{
 }
 
 
-button{
+.forumbtn{
   width: 100%;
   background-color: rgba(110, 109, 109);
   color: white;
@@ -416,6 +427,10 @@ button{
   border-radius: 4px;
   cursor: pointer;
 }
+
+
+
+
 
 /*Form Styles*/
 

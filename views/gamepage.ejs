@@ -2,6 +2,8 @@
 <html>
         <head>
                  <title>Default Game Page</title>
+                 <link rel="stylesheet" type="text/css" href="css/custom.css" />
+
         </head>
                <h1><%= gametitle %></h1>
                     <body>
@@ -12,13 +14,10 @@
                                 <iframe src="https://steamdb.info/embed/?appid=730" height="389" style="border:0;overflow:hidden;width:100%"></iframe>
                          </ul>
 
-                         <ul>
+                         
                               <% availablegame.forEach(function(game){ %>
-                              <li><%= game.name %>, £<%= game.price %></li>
-
-                         </ul>
-
-                         <p><%= game.positive_ratings %></p>
+                              <p><%= game.name %>, £<%= game.price %></p>
+                              <p><%= game.positive_ratings %></p>
 
 
 

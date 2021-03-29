@@ -1,7 +1,8 @@
 
 /* MB CODE */
 <style>
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+@import{ url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+}
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@600&display=swap');
 </style>
 
@@ -13,7 +14,7 @@ html , body{
   color:  #222;
 }
 
-h1,h2,h3,p,h4{
+h1,h2,h3,p,h4,h5{
   color: white;
 }
 
@@ -308,9 +309,9 @@ figure {
 
 
 /*--- Bootstrap Padding Fix --*/
-[class*="col-"] {
+/* [class*="col-"] {
     padding: 1rem;
-}
+} */
 
 
 /* Code for the table on the about page */
@@ -577,7 +578,7 @@ main{
     z-index: -1;
   }
 
-    .registerbox p{
+  .registerbox p{
     margin: 0;
     padding: 0;
     font-weight: bold;

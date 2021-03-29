@@ -1,39 +1,66 @@
 <!doctype html>
 <html>
         <head>
-                 <title>Default Game Page</title>
-                 <link rel="stylesheet" type="text/css" href="css/custom.css" />
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>Default Game Page</title>
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+          <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+          <link href="css/custom.css" rel="stylesheet">
+          <script src="js/js.js"></script>
+          <script src="https://unpkg.com/scrollreveal"></script>
+          <link rel="stylesheet" type="text/css" href="css/custom.css" />
 
         </head>
-               <h1><%= gametitle %></h1>
-                    <body>
+                         <!-- Navigation Nav bar and all the links -->
+                         <nav class="navbar navbar-expand-md navbar navbar-dark bg-secondary sticky-top">
+                              <div class="container-fluid">
+                                   <a class="navbar-brand" href="index.html"> <img src="images/logo%20gamespy.png" alt="Game spy Logo" /></a>
+                                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                                        <span class="navbar-toggler-icon"></span>
+                                   </button>
+                                   <div class="collapse navbar-collapse" id="navbarResponsive">
+                                        <ul class="navbar-nav ml-auto">
+                                             <li class="nav-item active">
+                                                  <a class="nav-link" href="search">Home</a>
+                                             </li>
+                                             <li class="nav-item">
+                                                  <a class="nav-link" href="PopularGames">Popular Games</a>
+                                             </li>
+                                             <li class="nav-item">
+                                                  <a class="nav-link" href="Categories.html">Categories</a>
+                                             </li>
+
+                                             <li class="nav-item">
+                                                  <a class="nav-link" href="Forum">Forum</a>
+                                             </li>
+                                             <li class="nav-item">
+                                                  <a class="nav-link" href="login">Login</a>
+                                             </li>
+                                        </ul>
+                                   </div>
+
+                              </div>
+                         </nav>
+                         <h1 style ="text-align: center;" ><%= gametitle %></h1>
                          <h3>Game decription</h3>
                          <p>Game deatails <%= gametitle %> </p>
-                         <ul>
-                                                                                                                                                                                                                   
-                                <iframe src="https://steamdb.info/embed/?appid=730" height="389" style="border:0;overflow:hidden;width:100%"></iframe>
-                         </ul>
+                              <% availablegame.forEach(function(game){ %>
+                                  <% if(game.appid != null){ %>
+                                        <iframe src="https://steamdb.info/embed/?appid=<%= game.appid %> "  height="389" style="border:0;overflow:hidden;width:90%"></iframe>
 
-                         
+                                 <% } %>
+                                 <% }) %>
+
                               <% availablegame.forEach(function(game){ %>
                               <p><%= game.name %>, £<%= game.price %></p>
-                              <p><%= game.positive_ratings %></p>
-
-
-
-
-
+                              <p>Game Average Ratings: <%= game.positive_ratings %></p>
 
                              <% }) %>
                          
-
-                         <!-- <form method="POST" action="/reviwed">
-                              <input type="checkbox" id="postive" name="postive" value="1">
-                              <label for="postive"> Postive</label><br>
-                              <input type="checkbox" id="negative" name="negative" value="-1">
-                              <label for="negative"> Negative</label><br>
-                              <input type="submit" name="submit"/>
-                            </form> -->
     
                     </body>
 </html>

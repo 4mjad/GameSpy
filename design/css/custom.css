@@ -174,8 +174,13 @@ hr.light-100 {
 }
 
 
-iframe {
-  border-width: 0;                                            /*frameborder changing for the youtube videos for w3 html compliance*/
+.Ggraph {
+  border-width: 0;
+  width: 100px;
+  height: 50px;
+  margin: 0 auto;
+  display: block;
+  border-style:none;
 }
 
 
@@ -723,4 +728,79 @@ table .col{
 .autocomplete-active {
   background-color: DodgerBlue !important; 
   color: #ffffff; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.headinforum{
+  text-align:center;
+  color: rgba(255,255,255,1);
+  margin: 30px;
+  display: block;
+}
+
+.ptableforum table{
+margin: auto auto;
+border-collapse: collapse;
+}
+
+.ptableforum{
+margin: 0px 0% 0% 0%;
+margin-left: -2.7%;
+}
+
+td {
+  padding: 5px;
+}
+
+td {
+      width:25%;
+}
+
+td{
+background-color: rgb(110, 109, 109);
+}
+th{
+color:white;
+}
+
+.rowforum{
+text-align: left;
+}
+
+.rowforum td{
+color: #cacaca;
+}
+
+.wposforum{
+  text-align: left;
+}
+
+.wposforum td{
+  color:rgb(255, 255, 255);
+}
+
+
+table .colforum{
+border-bottom: 1px solid #FFFFFF;
+  background-color: rgb(43, 41, 87);
+  text-align: left;
+}
+
+.wposforum:hover td{
+background-color:rgb(43, 41, 87);;
+}
+
+.tableforum{
+ position: relative;
+ width: 100%;
 }

@@ -42,6 +42,10 @@ module.exports = function (app) // this file has been exported as a function
   // });
   // });
 
+
+
+  //////////////////////------------------------------- SEARCH PAGE -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
+  
   app.get('/search', function (req, res) {
 
     res.render("search.html");
@@ -63,6 +67,7 @@ module.exports = function (app) // this file has been exported as a function
     });
   });
 
+  //////////////////////------------------------------- GAME PAGE -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
 
   app.get('/Game', function (req, res) { // get request to list page
     var MongoClient = require('mongodb').MongoClient;
@@ -78,45 +83,18 @@ module.exports = function (app) // this file has been exported as a function
     });
   })
 
+
+  //////////////////////------------------------------- POPULAR GAMES PAGE -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
+
   app.get('/populargames', function (req, res) {
     res.render("populargames.html");
   });
 
+  //////////////////////------------------------------- REGISTER PAGE -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
+
   app.get('/register', function (req, res) {
     res.render("register.html");
   })
-
-  // app.post('/registered',[check('username').notEmpty(), check('firstname').notEmpty(),check('lastname').notEmpty(), check('email').isEmail(),check('password').isLength({min:8})], function (req,res) { // POST method route
-  //   var MongoClient = require('mongodb').MongoClient;      
-  //   const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
-
-  //   bcrypt.hash(plainPassword, saltRounds, function(err, hashedPassword) { 
-  //     MongoClient.connect(url, function(err, client) {
-  //       if(err) throw err;
-  //       var db = client.db ('GameSpy');
-  //       const bcrypt = require('bcrypt');
-  //       const saltRounds = 10; 
-  //       const plainPassword = req.body.password;
-  //       const errors = validationResult(req);
-  //       if(!errors.isEmpty()){
-  //          res.redirect('./register');
-  //       }
-  //       else{
-
-
-
-  //       db.collection('users').insertOne({ 
-  //         first: req.body.firstname,
-  //         last: req.body.lastname,
-  //         email: req.body.email,
-  //         username: req.body.username,
-  //         password: hashedPassword
-  //       });
-  //       res.send('You are now registered, Your user name is: '+ req.body.username + ' your password is: '+ req.body.password +' and your hashed password is: '+ hashedPassword);  //sends response to user
-  //       client.close();
-  //     })
-  //   })
-  // });
 
   app.post('/registered', [check('username').notEmpty(), check('firstname').notEmpty(), check('lastname').notEmpty(), check('email').isEmail(), check('password').isLength({ min: 8 })], function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
@@ -150,6 +128,7 @@ module.exports = function (app) // this file has been exported as a function
   });
 
 
+//////////////////////------------------------------- LOGIN PAGE -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
 
   app.get('/login', function (req, res) {
     res.render('login.html')
@@ -196,9 +175,21 @@ module.exports = function (app) // this file has been exported as a function
     })
   });
 
+//////////////////////------------------------------- LOGOUT -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
 
-  app.get('/Forum', redirectLogin, function (req, res) {
-    res.render('Forum.html')
+  app.get('/logout', redirectLogin, (req, res) => {
+    req.session.destroy(err => {
+      if (err) {
+        return res.redirect('./')
+      }
+      res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<h1>' + ('you are now logged out.') + '</h1>' + '<br />' + '<a href=' + './' + '>Home</a>');
+    })
+  })
+
+  //////////////////////------------------------------- COMPLAINTS PAGE -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
+
+  app.get('/Complaints', redirectLogin, function (req, res) {
+    res.render('complaints.html')
   });
 
   app.post('/Complained', [check('email').isEmail(), check('message').notEmpty(), check('subject').notEmpty()], function (req, res) {
@@ -245,6 +236,7 @@ module.exports = function (app) // this file has been exported as a function
   });
 
 
+
   //get method route
   app.get('/Counter-Strike%20Nexon:%20Zombies', function (req, res) {
     //use mongo
@@ -263,9 +255,9 @@ module.exports = function (app) // this file has been exported as a function
   });
 
 
+//////////////////////------------------------------- COMPLAINTS PAGE FOR ADMIN -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
 
-
-app.get('/complaints',redirectLogin,function(req,res) {
+app.get('/complaintsadmin',redirectLogin,function(req,res) {
   var MongoClient = require('mongodb').MongoClient;
   const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
   MongoClient.connect(url, function (err, client) {
@@ -274,7 +266,7 @@ app.get('/complaints',redirectLogin,function(req,res) {
   db.collection('Complaints').find().toArray((findErr, results) => { // produces all available books
   if (findErr) throw findErr;
   else
-     res.render('complaints.ejs', {availablegame:results});
+     res.render('complaintsadmin.ejs', {availablegame:results});
   client.close();
 });
 });
@@ -312,19 +304,9 @@ app.post('/deleted',[check('email').isEmail()],function(req,res){
 }); 
 
 
+//////////////////////------------------------------- API PAGE -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
 
-  app.get('/logout', redirectLogin, (req, res) => {
-    req.session.destroy(err => {
-      if (err) {
-        return res.redirect('./')
-      }
-      res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<h1>' + ('you are now logged out.') + '</h1>' + '<br />' + '<a href=' + './' + '>Home</a>');
-    })
-  })
-
-
-
-  app.get('/api', function (req, res) {
+app.get('/api', function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
     var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
     MongoClient.connect(url, function (err, client) {
@@ -337,6 +319,66 @@ app.post('/deleted',[check('email').isEmail()],function(req,res){
       });
     });
   });
+
+
+//////////////////////------------------------------- FORUM PAGE -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
+
+  app.get('/forum',redirectLogin,function(req,res) {
+    var MongoClient = require('mongodb').MongoClient;
+    const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+    MongoClient.connect(url, function (err, client) {
+    if (err) throw err;
+    var db = client.db('GameSpy');
+    db.collection('Messages').find().sort({ date: -1 }).toArray((findErr, results) => { 
+    if (findErr) throw findErr;
+    else
+       res.render('forum.ejs', {availablemessage:results});
+    client.close();
+  });
+  });
+  })
+
+  app.post("/MessageAdded",(req,res)=>{
+    var MongoClient = require('mongodb').MongoClient;
+    var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
+    var date= new Date();
+    var todayDate= date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear() +' ('+date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() +') ';
+    var UserId = req.session.userId;
+    var message={
+    username: UserId, 
+    message:req.body.message, 
+    date:todayDate
+    }
+    
+    MongoClient.connect(url, (err, client)=> {
+    if(err) throw err;
+    var db = client.db('GameSpy');
+    db.collection("Messages").insertOne(message, (err,result)=>{
+    if(err) throw err;
+    res.send(`Hi! ${message.username}! Your message: ${message.message} has been send!!`+ '<br>' + '<a href="./">Home</a>');
+    
+    });
+    client.close(); 
+    
+    });
+  })
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

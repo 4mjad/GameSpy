@@ -1,66 +1,118 @@
 <!doctype html>
 <html>
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>Default Game Page</title>
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-          <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-          <link href="css/custom.css" rel="stylesheet">
-          <script src="js/js.js"></script>
-          <script src="https://unpkg.com/scrollreveal"></script>
-          <link rel="stylesheet" type="text/css" href="css/custom.css" />
 
-        </head>
-                         <!-- Navigation Nav bar and all the links -->
-                         <nav class="navbar navbar-expand-md navbar navbar-dark bg-secondary sticky-top">
-                              <div class="container-fluid">
-                                   <a class="navbar-brand" href="index.html"> <img src="images/logo%20gamespy.png" alt="Game spy Logo" /></a>
-                                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-                                        <span class="navbar-toggler-icon"></span>
-                                   </button>
-                                   <div class="collapse navbar-collapse" id="navbarResponsive">
-                                        <ul class="navbar-nav ml-auto">
-                                             <li class="nav-item active">
-                                                  <a class="nav-link" href="search">Home</a>
-                                             </li>
-                                             <li class="nav-item">
-                                                  <a class="nav-link" href="PopularGames">Popular Games</a>
-                                             </li>
-                                             <li class="nav-item">
-                                                  <a class="nav-link" href="Categories.html">Categories</a>
-                                             </li>
+<head>
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <title>Default Game Page</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+     <link href="css/custom.css" rel="stylesheet">
+     <script src="js/js.js"></script>
+     <script src="https://unpkg.com/scrollreveal"></script>
+     <link rel="stylesheet" type="text/css" href="css/custom.css" />
 
-                                             <li class="nav-item">
-                                                  <a class="nav-link" href="Forum">Forum</a>
-                                             </li>
-                                             <li class="nav-item">
-                                                  <a class="nav-link" href="login">Login</a>
-                                             </li>
-                                        </ul>
-                                   </div>
+</head>
+<!-- Navigation Nav bar and all the links -->
+<nav class="navbar navbar-expand-md navbar navbar-dark bg-secondary sticky-top">
+     <div class="container-fluid">
+          <a class="navbar-brand" href="index.html"> <img src="images/logo%20gamespy.png" alt="Game spy Logo" /></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+               <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+               <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                         <a class="nav-link" href="search">Home</a>
+                    </li>
+                    <li class="nav-item">
+                         <a class="nav-link" href="PopularGames">Popular Games</a>
+                    </li>
+                    <li class="nav-item">
+                         <a class="nav-link" href="Complaint">Complaints</a>
+                    </li>
 
-                              </div>
-                         </nav>
-                         <h1 style ="text-align: center;" ><%= gametitle %></h1>
-                         <h3>Game decription</h3>
-                         <p>Game deatails <%= gametitle %> </p>
-                              <% availablegame.forEach(function(game){ %>
-                                  <% if(game.appid != null){ %>
-                                        <iframe src="https://steamdb.info/embed/?appid=<%= game.appid %> "  height="389" style="border:0;overflow:hidden;width:90%"></iframe>
+                    <li class="nav-item">
+                         <a class="nav-link" href="complaints.html">Forum</a>
+                    </li>
+                    <li class="nav-item">
+                         <a class="nav-link" href="login">Login</a>
+                    </li>
+               </ul>
+          </div>
 
-                                 <% } %>
-                                 <% }) %>
+     </div>
+</nav>
+<div>
+     <h1 style="text-align: center;">
+          <%= gametitle %>
+     </h1>
+     <h3>How can I find the best prices for <%= gametitle %> offical title? </h3>
+     <p>GameSpy compares the cheapest prices of <%= gametitle %> on the digital downloads offical marketplaces to find
+               the best sales and discounts on trusted stores. </p>
+     <% availablegame.forEach(function(game){ %>
+          <% if(game.appid !=null){ %>
+               <iframe src="https://steamdb.info/embed/?appid=<%= game.appid %> "
+                    style="border:0;overflow:hidden;height:389px;width:100%;"></iframe>
+               <h3>
+                    <%= game.name %>, £<%= game.price %> &nbsp;&nbsp; Game Average Ratings: <%= game.positive_ratings %>
+               </h3>
+               <h3>Publisher: <%= game.publisher %>, Developer: <%= game.developer %>, Release Date<%= game.release_date
+                                   %>, Required Age: <%= game.required_age %>, Categories: <%= game.categories %>
+               </h3>
 
-                              <% availablegame.forEach(function(game){ %>
+               <% } %>
+                    <% }) %>
+</div>
+
+<!-- <% availablegame.forEach(function(game){ %>
                               <p><%= game.name %>, £<%= game.price %></p>
                               <p>Game Average Ratings: <%= game.positive_ratings %></p>
 
-                             <% }) %>
-                         
-    
-                    </body>
+                             <% }) %> -->
+<ul>
+     <div class="ptable">
+          <table class="table">
+               3 <tr class="col">
+                    <th>Game Name</th>
+                    <th>Game Price</th>
+                    <th>Developer</th>
+                    <th>Publisher</th>
+                    <th>Release Date</th>
+                    <th>Required Age</th>
+                    <th>Categories</th>
+               </tr>
+               <% availablegame.forEach(function(game){ %>
+                    <tr class="wpos">
+                         <td>
+                              <%= game.name %></a>
+                         </td>
+                         <td>
+                              <%= game.price %>
+                         </td>
+                         <td>
+                              <%= game.developer %>
+                         </td>
+                         <td>
+                              <%= game.publisher %>
+                         </td>
+                         <td>
+                              <%= game.release_date %>
+                         </td>
+                         <td>
+                              <%= game.required_age %>
+                         </td>
+                         <td>
+                              <%= game.categories %>
+                         </td>
+                    </tr>
+                    <% }) %>
+          </table>
+     </div>
+</ul>
+</body>
+
 </html>

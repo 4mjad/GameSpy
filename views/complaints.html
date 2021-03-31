@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Forum</title>
+	<title>Complaints</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -47,22 +47,29 @@
 	</nav>
 
 	<!--Page Name/Header-->
-	<h1 class="centred">Forum</h1>
+	<h1 class="centred">Complaints</h1>
 
 
 	<!-- Main Content -->
 	<main>
-        <form method="POST" action="/messageAdded">
-            <label>Username: </label>
-            <input id="userName" type="text" name="userName" placeholder="username" required />
-            <br>
-            <label>Message:</label>
-            <br>
-            <textarea rows="40" cols="50" id="message" name="message"/>
-            <br>
-            <input type="submit" value="send" />
-            </form>
-           
+		<!--Code is from Group project-->
+
+		<form class="centered" method="POST" action="/Complained">
+			<div class="form-group1">
+				<label for="email">Email: </label>
+				<input type="text1" id="email" name="email" placeholder="Enter your email"><br />
+			</div>
+			<div class="form-group1">
+				<label for="subject">Subject: </label>
+				<input type="text1" id="subject" name="subject" placeholder="Enter the subject">
+			</div>
+			<div class="form-group1">
+				<label for="message">Message: </label>
+				<!-- <input id ="message" name = "message" placeholder="message"> -->
+				<textarea rows="10" cols="50" name="message" id="message"
+					placeholder="Please write your complaint. Do not use any profanity or negative language."></textarea>
+			</div>
+			<button class = "button forumbtn"  type="submit1">Submit</button>
 		</form>
 	</main>
 </body>

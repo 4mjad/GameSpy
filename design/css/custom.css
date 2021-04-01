@@ -18,6 +18,11 @@ h1,h2,h3,p,h4,h5{
   color: white;
 }
 
+h1{
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
 
 
 body{
@@ -225,11 +230,13 @@ hr.light-100 {
   padding: 8px 14px;
 }
 
-.display-4 {
-  font-size: 200%;
+h1.display-4 {
+  font-size: 350%;
   color: white;
-  text-align: center;
+  font-weight: bold;
+  padding-left: 350px;
 }
+
   .social a {
     font-size: 2.5em;
     padding: 1.2rem;
@@ -386,7 +393,6 @@ padding: 10px;
 	border-radius: 50%;
 	display: flex;
 	justify-content: center;
-	align-items: center;
 }
 
 .search-box a{
@@ -408,6 +414,10 @@ padding: 10px;
   height: 60px;
 }
 
+.Searchbox::placeholder{
+  color: grey;
+}
+
 
 
 input{
@@ -417,11 +427,10 @@ input{
 	box-sizing: border-box;
 	transition: .5s;
 }
-input[type = "text"]{
+input[type = "text"] {
 	background: #fff;
-	
+  padding: 10px;
 }
-
 
 .forumbtn{
   width: 100%;
@@ -693,52 +702,11 @@ table .col{
 }
 
 
-/* Autocomplete */
-
 .autocomplete {
   position: relative;
   display: inline-block;
+  font-size: 25px;
 }
-
-.autocomplete-items {
-  position: absolute;
-  border: 1px solid #d4d4d4;
-  border-bottom: none;
-  border-top: none;
-  z-index: 99;
-  /*position the autocomplete items to be the same width as the container:*/
-  top: 100%;
-  left: 0;
-  right: 0;
-}
-
-.autocomplete-items div {
-  padding: 10px;
-  cursor: pointer;
-  background-color: #fff; 
-  border-bottom: 1px solid #d4d4d4; 
-}
-
-/*when hovering an item:*/
-.autocomplete-items div:hover {
-  background-color: #e9e9e9; 
-}
-
-/*when navigating through the items using the arrow keys:*/
-.autocomplete-active {
-  background-color: DodgerBlue !important; 
-  color: #ffffff; 
-}
-
-
-
-
-
-
-
-
-
-
 
 
 .headinforum{
@@ -803,4 +771,72 @@ background-color:rgb(43, 41, 87);;
 .tableforum{
  position: relative;
  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+.headingamepage{
+  text-align:center;
+  color: rgba(255,255,255,1);
+  margin: 30px;
+  display: block;
+}
+
+.ptablegamepage table{
+margin: auto auto;
+border-collapse: collapse;
+}
+
+.ptablegamepage{
+margin: 0px 0% 5px 0%;
+margin-right: 5%;
+margin-left: 2.5%;
+}
+
+td {
+  padding: 5px;
+}
+
+td {
+      width:25%;
+}
+
+td{
+background-color: rgb(110, 109, 109);
+}
+th{
+color:white;
+}
+
+.rowgamepage{
+text-align: left;
+}
+
+.rowgamepage td{
+color: #cacaca;
+}
+
+.wposgamepage{
+  text-align: left;
+}
+
+.wposgamepage td{
+  color:rgb(255, 255, 255);
+}
+
+
+table .colgamepage{
+border-bottom: 1px solid #FFFFFF;
+  background-color: rgb(43, 41, 87);
+  text-align: left;
+}
+
+.wposgamepage:hover td{
+background-color:rgb(43, 41, 87);;
 }

@@ -92028,15 +92028,17 @@ $(function(){
    
   ]
 
-    $("#tags").autocomplete({
+    /* $("#tags").autocomplete({
       source: gamenames,
       maxResults:10
-    });
+    }); */
 
-      $("#tags").autocomplete({
+      $("#allgames").autocomplete({
+         source: gamenames, 
          source: function(request, response) {
          var results = $.ui.autocomplete.filter(gamenames, request.term);
          response(results.slice(0, 8));
       }
     });
+    
   }); 

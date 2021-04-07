@@ -54,18 +54,17 @@
      <p>GameSpy compares the cheapest prices of <%= gametitle %> on the digital downloads offical marketplaces to find
                the best sales and discounts on trusted stores. </p>
      <% availablegame.forEach(function(game){ %>
-          <% if(game.appid !=null){ %>
+          <% if(game.appid != null){ %>
                <iframe src="https://steamdb.info/embed/?appid=<%= game.appid %> "
                     style="border:0;overflow:hidden;height:389px;width:100%;"></iframe>
-               <h3>
-                    <%= game.name %>, £<%= game.price %> &nbsp;&nbsp; Game Average Ratings: <%= game.positive_ratings %>
-               </h3>
-               <h3>Publisher: <%= game.publisher %>, Developer: <%= game.developer %>, Release Date<%= game.release_date
-                                   %>, Required Age: <%= game.required_age %>, Categories: <%= game.categories %>
-               </h3>
 
+               <span class="heading">Game Average Rating</span>
+               <p><%= game.positive_ratings %></p>
+               <hr style="border:3px solid #f1f1f1">
+               <%}else{ %>
+                    <h3><%= game.name %> </h3>
                <% } %>
-                    <% }) %>
+               <% }) %>
 </div>
 
 <!-- <% availablegame.forEach(function(game){ %>
@@ -78,11 +77,14 @@
           <table class="tablegamepage">
                 <tr class="colgamepage">
                     <th>Game Name</th>
-                    <th>Game Price</th>
                     <th>Developer</th>
                     <th>Publisher</th>
-                    <th>Release Date</th>
-                    <th>Required Age</th>
+                    <th>Steam Price</th>
+                    <th>GOG Price</th>
+                    <th>Ubisoft Price</th>
+                    <th>Origin Price</th>
+                    <th>EpicGames Price</th>
+                    <th>Genre</th>
                     <th>Categories</th>
                </tr>
                <% availablegame.forEach(function(game){ %>
@@ -91,19 +93,28 @@
                               <%= game.name %></a>
                          </td>
                          <td>
-                              <%= game.price %>
-                         </td>
-                         <td>
                               <%= game.developer %>
                          </td>
                          <td>
-                              <%= game.publisher %>
+                              <%= game.steam_publisher %>
                          </td>
                          <td>
-                              <%= game.release_date %>
+                              <%= game.steam_price %>
                          </td>
                          <td>
-                              <%= game.required_age %>
+                              <%= game.GOG_price %>
+                         </td>
+                         <td>
+                              <%= game.ubisoft_price %>
+                         </td>
+                         <td>
+                              <%= game.origin_price %>
+                         </td>
+                         <td>
+                              <%= game.epicgames_price %>
+                         </td>
+                         <td>
+                              <%= game.steamspy_tags %>
                          </td>
                          <td>
                               <%= game.categories %>

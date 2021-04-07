@@ -120,7 +120,7 @@ module.exports = function (app) // this file has been exported as a function
             username: req.sanitize(req.body.username),
             password: hashedPassword
           });
-          res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<h1>' +  'You are now registered, Your user name is: ' + req.body.username + ' your password is: ' + req.body.password + ' and your hashed password is: ' + hashedPassword + '</h1>');
+          res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' +  'You are now registered, Your user name is: ' + req.body.username + ' your password is: ' + req.body.password + ' and your hashed password is: ' + hashedPassword + '</p>');
           client.close();
         })
       }
@@ -160,15 +160,15 @@ module.exports = function (app) // this file has been exported as a function
               if (err) throw err;
               if (result == true) {
                 req.session.userId = req.sanitize(req.body.username);
-                res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + ('Logged In, All information provided is correct') + '<br />' + '<a href=' + './' + '>Home</a>')
+                res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Logged In, All information provided is correct') + '</p>' + '<br />' + '<a href=' + './' + '>Home</a>')
               }
               else {
-                res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + ('Invalid Password Entered') + '<br />' + '<a href=' + './' + '>Home</a>')
+                res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Invalid Password Entered') +'</p>' + '<br />' + '<a href=' + './' + '>Home</a>')
               }
             })
           }
           else {
-            res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + ('Invalid Username Entered') + '<br />' + '<a href=' + './' + '>Home</a>')
+            res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Invalid Username Entered') +'</p>' + '<br />' + '<a href=' + './' + '>Home</a>')
           }
         })
       }
@@ -182,7 +182,7 @@ module.exports = function (app) // this file has been exported as a function
       if (err) {
         return res.redirect('./')
       }
-      res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<h1>' + ('you are now logged out.') + '</h1>' + '<br />' + '<a href=' + './' + '>Home</a>');
+      res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('you are now logged out.') + '</p>' + '<br />' + '<a href=' + './' + '>Home</a>');
     })
   })
 
@@ -212,7 +212,7 @@ module.exports = function (app) // this file has been exported as a function
           Subject: req.body.subject,
           Message: req.body.message,
         });
-        res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + "Your Email is: " + req.body.email + "The subject of the issue is: " + req.body.subject + "The message you are sending is: " + req.body.message);  //sends response to user
+        res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ("Your Email is: " + req.body.email + "The subject of the issue is: " + req.body.subject + "The message you are sending is: " + req.body.message) + '</p>');  //sends response to user
         client.close();
       }
     })
@@ -292,11 +292,11 @@ app.post('/deleted',[check('email').isEmail()],function(req,res){
     if(result != null){ //if result is not equal to null that means the username exists in the database so it would execute the code within the if statement
 
       db.collection('Complaints').deleteOne({Email:word1},function(err,results){ //delete the user that has the username entered in the users collection by comparing username entered with the username in the collection and then delete all of that users information from the database and then tell the user the information is deleted
-        res.send(('Deleting User ' + word1 + ' from the database')+ '<br />'+'<a href='+'./'+'>Home</a>') 
+        res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' +('Deleting User ' + word1 + ' from the database') + '</p>' + '<br />'+'<a href='+'./'+'>Home</a>') 
       })
     }
     else{ //if username is not found in the database that means results is equal to null then tell the user that the username entered does not exist in the database
-      res.send(('User with the username ' + word1 + ' does not exist in the database') + '<br />'+'<a href='+'./'+'>Home</a>')
+       res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style = "color:#FFFFFF;">' + ("User with the username " + word1 + " does not exist in the database") +'</p>')
     }
     })
   }
@@ -329,7 +329,7 @@ app.get('/api', function (req, res) {
     MongoClient.connect(url, function (err, client) {
     if (err) throw err;
     var db = client.db('GameSpy');
-    db.collection('Messages').find().sort({ date: -1 }).toArray((findErr, results) => { 
+    db.collection('Messages').find().sort({ TimeDate: -1 }).toArray((findErr, results) => { 
     if (findErr) throw findErr;
     else
        res.render('forum.ejs', {availablemessage:results});
@@ -342,44 +342,23 @@ app.get('/api', function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
     var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
     var date= new Date();
-    var todayDate= date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear() +' ('+date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() +') ';
-    var UserId = req.session.userId;
-    var message={
-    username: UserId, 
-    message:req.body.message, 
-    date:todayDate
-    }
     
     MongoClient.connect(url, (err, client)=> {
     if(err) throw err;
     var db = client.db('GameSpy');
-    db.collection("Messages").insertOne(message, (err,result)=>{
+    db.collection("Messages").insertOne({
+      username: req.session.userId, 
+      message:req.body.message, 
+      TimeDate:date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear() +' ('+date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() +') '
+    }, function(err,result){
     if(err) throw err;
-    res.send(`Hi! ${message.username}! Your message: ${message.message} has been send!!`+ '<br>' + '<a href="./">Home</a>');
-    
+    res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ("Hello " + req.session.userId +  " You have submitted the following message: " + req.body.message + '</p>') + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
+
     });
     client.close(); 
-    
     });
+
   })
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

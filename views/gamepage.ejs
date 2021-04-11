@@ -15,6 +15,7 @@
      <script src="https://unpkg.com/scrollreveal"></script>
      <link rel="stylesheet" type="text/css" href="css/custom.css" />
 
+
 </head>
 <!-- Navigation Nav bar and all the links -->
 <nav class="navbar navbar-expand-md navbar navbar-dark bg-secondary sticky-top">
@@ -60,6 +61,12 @@
 
                <span class="heading">Game Average Rating</span>
                <p><%= game.positive_ratings %></p>
+               <p><%= game.negative_ratings %></p>
+               <!-- <p><%= (((game.positive_ratings / (game.positive_ratings + game.negative_ratings)) - ((game.positive_ratings / (game.positive_ratings + game.negative_ratings)) - 0.5 ) * Math.pow( 2, -Math.log10( (game.positive_ratings + game.negative_ratings) + 1 ) ))* 100) %></p> -->
+               
+               <p><%= ((game.positive_ratings) / (game.positive_ratings + game.negative_ratings)) %></p>;
+           
+
                <hr style="border:3px solid #f1f1f1">
                <%}else{ %>
                     <h3><%= game.name %> </h3>

@@ -840,3 +840,13 @@ background-color:rgb(43, 41, 87);;
   margin-right: 25px;
   color:white;
 }
+
+
+
+#populargame {
+    width: 600px;
+    height: 500px;
+
+    /*Scale down will take the necessary specified space that is 400px x 200px without stretching the image*/
+    object-fit:scale-down;
+}

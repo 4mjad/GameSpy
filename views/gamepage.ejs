@@ -60,14 +60,9 @@
                     style="border:0;overflow:hidden;height:389px;width:100%;"></iframe>
 
                <span class="heading">Game Average Rating</span>
-               <p><%= game.positive_ratings %></p>
-               <p><%= game.negative_ratings %></p>
-               <!-- <p><%= (((game.positive_ratings / (game.positive_ratings + game.negative_ratings)) - ((game.positive_ratings / (game.positive_ratings + game.negative_ratings)) - 0.5 ) * Math.pow( 2, -Math.log10( (game.positive_ratings + game.negative_ratings) + 1 ) ))* 100) %></p> -->
-               
-               <!-- <p><%= ((game.positive_ratings) / (game.positive_ratings + game.negative_ratings)) %></p>; -->
-               <p><%= Math.round(game.average_ratings)%>%</p>
+               <p><i class="fas fa-thumbs-up"></i><%= game.positive_ratings %></p>
+               <p><i class="fas fa-thumbs-down"></i><%= game.negative_ratings %></p>
            
-
                <hr style="border:3px solid #f1f1f1">
                <%}else{ %>
                     <h3><%= game.name %> </h3>
@@ -104,7 +99,7 @@
                               <%= game.developer %>
                          </td>
                          <td>
-                              <%= game.steam_publisher %>
+                              <%= game.publisher %>
                          </td>
                          <td>
                               <%= game.steam_price %>

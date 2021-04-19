@@ -12,38 +12,6 @@ module.exports = function (app) // this file has been exported as a function
     }
   }
 
-
-  //   app.get('/list', function(req, res) { // get request to list page
-  //       var MongoClient = require('mongodb').MongoClient;
-  //       const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
-  //       MongoClient.connect(url, function (err, client) {
-  //       if (err) throw err;
-  //       var db = client.db('GameSpy');
-  //       db.collection('ALL').find().toArray((findErr, results) => { // produces all available books
-  //       if (findErr) throw findErr;
-  //       else
-  //          res.render('list.ejs', {availablegame:results});
-  //       client.close();
-  //   });
-  // });
-  // });
-
-  // app.get('/listGOG', function(req, res) { // get request to list page
-  //       var MongoClient = require('mongodb').MongoClient;
-  //       const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
-  //       MongoClient.connect(url, function (err, client) {
-  //       var db = client.db('GameSpy');
-  //       db.collection('GOG').find().toArray((findErr, results) => { // produces all available books
-  //       if (findErr) throw findErr;
-  //       else
-  //          res.render('list.ejs', {availablegame:results});
-  //       client.close();                                                                                                                                                                                       
-  //   });
-  // });
-  // });
-
-
-
   //////////////////////------------------------------- SEARCH PAGE -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
   
   app.get('/search', function (req, res) {
@@ -120,7 +88,7 @@ module.exports = function (app) // this file has been exported as a function
             username: req.sanitize(req.body.username),
             password: hashedPassword
           });
-          res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' +  'You are now registered, Your user name is: ' + req.body.username + ' your password is: ' + req.body.password + ' and your hashed password is: ' + hashedPassword + '</p>');
+          res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' +  'You are now registered, Your user name is: ' + req.body.username + ' your password is: ' + req.body.password + ' and your hashed password is: ' + hashedPassword + '</p>'  + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>');
           client.close();
         })
       }
@@ -160,15 +128,15 @@ module.exports = function (app) // this file has been exported as a function
               if (err) throw err;
               if (result == true) {
                 req.session.userId = req.sanitize(req.body.username);
-                res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Logged In, All information provided is correct') + '</p>' + '<br />' + '<a href=' + './' + '>Home</a>')
+                res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Logged In, All information provided is correct') + '</p>'  + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
               }
               else {
-                res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Invalid Password Entered') +'</p>' + '<br />' + '<a href=' + './' + '>Home</a>')
+                res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Invalid Password Entered') +'</p>' + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
               }
             })
           }
           else {
-            res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Invalid Username Entered') +'</p>' + '<br />' + '<a href=' + './' + '>Home</a>')
+            res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Invalid Username Entered') +'</p>' + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
           }
         })
       }
@@ -182,7 +150,7 @@ module.exports = function (app) // this file has been exported as a function
       if (err) {
         return res.redirect('./')
       }
-      res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('you are now logged out.') + '</p>' + '<br />' + '<a href=' + './' + '>Home</a>');
+      res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('you are now logged out.') + '</p>'  + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>');
     })
   })
 
@@ -212,7 +180,7 @@ module.exports = function (app) // this file has been exported as a function
           Subject: req.body.subject,
           Message: req.body.message,
         });
-        res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ("Your Email is: " + req.body.email + "The subject of the issue is: " + req.body.subject + "The message you are sending is: " + req.body.message) + '</p>');  //sends response to user
+        res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ("Your Email is: " + req.body.email + "The subject of the issue is: " + req.body.subject + "The message you are sending is: " + req.body.message) + '</p>'  + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>');  //sends response to user
         client.close();
       }
     })
@@ -296,7 +264,7 @@ app.post('/deleted',[check('email').isEmail()],function(req,res){
       })
     }
     else{ //if username is not found in the database that means results is equal to null then tell the user that the username entered does not exist in the database
-       res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style = "color:#FFFFFF;">' + ("User with the username " + word1 + " does not exist in the database") +'</p>')
+       res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style = "color:#FFFFFF;">' + ("User with the username " + word1 + " does not exist in the database") +'</p>' + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
     }
     })
   }

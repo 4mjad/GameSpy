@@ -14,13 +14,12 @@
      <script src="js/js.js"></script>
      <script src="https://unpkg.com/scrollreveal"></script>
      <link rel="stylesheet" type="text/css" href="css/custom.css" />
-
-
 </head>
+
 <!-- Navigation Nav bar and all the links -->
 <nav class="navbar navbar-expand-md navbar navbar-dark bg-secondary sticky-top">
      <div class="container-fluid">
-          <a class="navbar-brand" href="index.html"> <img src="images/logo%20gamespy.png" alt="Game spy Logo" /></a>
+          <a class="navbar-brand" href="search"> <img src="images/logo%20gamespy.png" alt="Game spy Logo" /></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
                <span class="navbar-toggler-icon"></span>
           </button>
@@ -42,6 +41,9 @@
                     <li class="nav-item">
                          <a class="nav-link" href="login">Login</a>
                     </li>
+                    <li class="nav-item">
+                         <a class="nav-link" href='/logout'>Logout</a>
+                    </li>
                </ul>
           </div>
 
@@ -62,6 +64,7 @@
                <span class="heading">Game Average Rating</span>
                <p><i class="fas fa-thumbs-up"></i><%= game.positive_ratings %></p>
                <p><i class="fas fa-thumbs-down"></i><%= game.negative_ratings %></p>
+               <p>Game Average Ratings: <%= Math.round(game.average_ratings)%>%</p>
            
                <hr style="border:3px solid #f1f1f1">
                <%}else{ %>
@@ -69,12 +72,6 @@
                <% } %>
                <% }) %>
 </div>
-
-<!-- <% availablegame.forEach(function(game){ %>
-                              <p><%= game.name %>, £<%= game.price %></p>
-                              <p>Game Average Ratings: <%= game.positive_ratings %></p>
-
-                             <% }) %> -->
 <ul>
      <div class="ptablegamepage">
           <table class="tablegamepage">

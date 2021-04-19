@@ -497,7 +497,7 @@ main{
 
 .loginbox{
   width: 400px;
-  height: 450px;
+  height: 460px;
   background: rgb(133, 133, 133);
   color: #ffffff;
   top: 50%;
@@ -579,7 +579,7 @@ main{
 
   .registerbox{
     width: 400px;
-    height: 620px;
+    height: 650px;
     background: rgb(133, 133, 133);
     color: #ffffff;
     top: 50%;

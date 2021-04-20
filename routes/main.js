@@ -14,9 +14,9 @@ module.exports = function (app) // this file has been exported as a function
 
   //////////////////////------------------------------- SEARCH PAGE -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
   
-  app.get('/search', function (req, res) {
+  app.get('/', function (req, res) {
 
-    res.render("search.html");
+    res.render("home.html");
   });
 
   app.get('/search-result', function (req, res) {
@@ -88,7 +88,7 @@ module.exports = function (app) // this file has been exported as a function
             username: req.sanitize(req.body.username),
             password: hashedPassword
           });
-          res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' +  'You are now registered, Your user name is: ' + req.body.username + ' your password is: ' + req.body.password + ' and your hashed password is: ' + hashedPassword + '</p>'  + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>');
+          res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' +  'You are now registered, Your user name is: ' + req.body.username + ' your password is: ' + req.body.password + ' and your hashed password is: ' + hashedPassword + '</p>'  + '<br />' + '<a href=' + './' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>');
           client.close();
         })
       }
@@ -128,15 +128,15 @@ module.exports = function (app) // this file has been exported as a function
               if (err) throw err;
               if (result == true) {
                 req.session.userId = req.sanitize(req.body.username);
-                res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Logged In, All information provided is correct') + '</p>'  + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
+                res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Logged In, All information provided is correct') + '</p>'  + '<br />' + '<a href=' + './' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
               }
               else {
-                res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Invalid Password Entered') +'</p>' + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
+                res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Invalid Password Entered') +'</p>' + '<br />' + '<a href=' + './' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
               }
             })
           }
           else {
-            res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Invalid Username Entered') +'</p>' + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
+            res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('Invalid Username Entered') +'</p>' + '<br />' + '<a href=' + './' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
           }
         })
       }
@@ -150,7 +150,7 @@ module.exports = function (app) // this file has been exported as a function
       if (err) {
         return res.redirect('./')
       }
-      res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('you are now logged out.') + '</p>'  + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>');
+      res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ('you are now logged out.') + '</p>'  + '<br />' + '<a href=' + './' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>');
     })
   })
 
@@ -180,47 +180,12 @@ module.exports = function (app) // this file has been exported as a function
           Subject: req.body.subject,
           Message: req.body.message,
         });
-        res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ("Your Email is: " + req.body.email + "The subject of the issue is: " + req.body.subject + "The message you are sending is: " + req.body.message) + '</p>'  + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>');  //sends response to user
+        res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ("Your Email is: " + req.body.email + "The subject of the issue is: " + req.body.subject + "The message you are sending is: " + req.body.message) + '</p>'  + '<br />' + '<a href=' + './' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>');  //sends response to user
         client.close();
       }
     })
   })
 
-  //get method route
-  app.get('/Counter-Strike', function (req, res) {
-    //use mongo
-    var MongoClient = require('mongodb').MongoClient;
-    var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
-    MongoClient.connect(url, function (err, client) {
-      if (err) throw err;
-      var db = client.db('GameSpy');
-      db.collection('ALL').find().toArray((findErr, results) => {
-        if (findErr) throw findErr;
-        else
-          res.render('gamepage.ejs', { gametitle: req.query.name + req.query.price, pageText: " description: This is the Counter Stirke Global Offense Number Of people playing it concurrently", appid: "780", availablegame: results });
-        client.close();
-      });
-    });
-  });
-
-
-
-  //get method route
-  app.get('/Counter-Strike%20Nexon:%20Zombies', function (req, res) {
-    //use mongo
-    var MongoClient = require('mongodb').MongoClient;
-    var url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
-    MongoClient.connect(url, function (err, client) {
-      if (err) throw err;
-      var db = client.db('GameSpy');
-      db.collection('ALL').find().toArray((findErr, results) => {
-        if (findErr) throw findErr;
-        else
-          res.render('gamepage.ejs', { gametitle: " Appid ", pageText: " description: This is the Counter Stirke Global Offense Number Of people playing it concurrently", appid: "780", availablegame: results });
-        client.close();
-      });
-    });
-  });
 
 
 //////////////////////------------------------------- COMPLAINTS PAGE FOR ADMIN -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
@@ -264,7 +229,7 @@ app.post('/deleted',[check('email').isEmail()],function(req,res){
       })
     }
     else{ //if username is not found in the database that means results is equal to null then tell the user that the username entered does not exist in the database
-       res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style = "color:#FFFFFF;">' + ("User with the username " + word1 + " does not exist in the database") +'</p>' + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
+       res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style = "color:#FFFFFF;">' + ("User with the username " + word1 + " does not exist in the database") +'</p>' + '<br />' + '<a href=' + './' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
     }
     })
   }
@@ -320,7 +285,7 @@ app.get('/api', function (req, res) {
       TimeDate:date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear() +' ('+date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() +') '
     }, function(err,result){
     if(err) throw err;
-    res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ("Hello " + req.session.userId +  " You have submitted the following message: " + req.body.message + '</p>') + '<br />' + '<a href=' + './search' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
+    res.send('<link rel="stylesheet" type="text/css" href="css/custom.css">' + '<p style= "color:#FFFFFF;">' + ("Hello " + req.session.userId +  " You have submitted the following message: " + req.body.message + '</p>') + '<br />' + '<a href=' + './' + '>Home </a>' + '<a href=' + './PopularGames' + '> PopularGames </a> ' + '<a href=' + './Complaints' + '> Complaints</a>' + '<a href=' + './Forum' + '> Forum </a>' + '<a href=' + './login' + '> login </a>' + '<a href=' + './logout' + '> Logout</a>')
 
     });
     client.close(); 

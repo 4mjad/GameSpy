@@ -5,6 +5,8 @@ function Linear(price){
      var y =[m];
      var z = [m];
      var a = [m];
+     var b = x;
+     var c = y;
      x1,y1,x2,y2 =0;
      slope,constant = 0
 
@@ -36,4 +38,23 @@ function Linear(price){
         }
         slope = x2/y2;
         constant = y1/(slope * x1);
-}
+
+        }
+
+
+        function graph(b,c){
+
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", 250)
+                .attr("height", 250)
+               
+                svg.selectAll("circle")
+                .b(b).enter()
+                .c(c).enter()
+                .append("circle")
+                .attr("cx", function(d) {return d[0]})
+                .attr("cy", function(d) {return d[1]})
+                .attr("r", 4)
+
+            }

@@ -82,10 +82,29 @@
 			</div>
 			<button class = "button forumbtn"  type="submit1">Submit</button>
 		</form>
-          
-        <ul>
-            <div class="ptableforum">
-              <table style="width: 100%;">
+		<!-- <ul>
+			<div class="ptablegamepage" style="overflow-x:auto;">
+			<table class="tablegamepage">
+				<tr class="colgamepage">
+					<th>Message Date</th>
+					<th>User</th>
+					<th>Message</th>
+				</tr>
+				<% availablemessage.forEach(function(message){ %>
+				<tr class="wposgamepage">
+					<td><%= message.TimeDate %></td>
+					<td><%= message.username %></td>
+					<td><%= message.message %></td>
+				</tr>
+				<% }) %>
+				</table>
+			  </div>
+		</ul> -->
+
+		         <ul> 
+			<!-- <div style="overflow-x:auto;"> -->
+             <div class="ptableforum" style="overflow-x:auto;">
+              <table class="tableforum" style="width: 100%;">
                 <tr class="colforum">
                   <th>Message Date</th>
                   <th>User</th>
@@ -105,9 +124,10 @@
                   </tr>
                   <% }) %>
               </table>
-        </div>
-        </ul>
-	</main>
+        </div> 
+	<!-- </div> -->
+         </ul> 
+		</main>
 </body>
 
 

@@ -98,6 +98,12 @@ body{
 
 .sf1, .sf2, .sf3{
   /* SF logo images if any change it needed */ 
+  width: 100%;
+  max-width: 550px;
+  height: auto;
+
+  /*Scale down will take the necessary specified space that is 400px x 200px without stretching the image*/
+  object-fit:scale-down;
 }
 
 .giff {
@@ -355,51 +361,62 @@ figure {
 /* SEARCH PAGE CSS */
 
 .wrapper{
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%,-140%);
+    position: relative;
+    margin:auto;
+    
+    /* top: 60%;
+    left: 50%; */
+    /* transform: translate(-50%,-140%); */
     background: rgba(0,0,0,0.6);
     font-family: 'Comfortaa', cursive;
-    max-width: 800px;
+
     width: 100%;
+    max-width: 500px;
+    height: auto;
+   /* padding: top 100px; */
+
     padding: 15px;
     border-radius:10px;
-    display: flex;
-    justify-content: space-between;
+    cursor: pointer;
+    /* display: flex;
+    justify-content: space-between; */
 }
-.wrapper .input{
-    width: 100%;
-    padding: 15px 20px;
+.wrapper input{
+  width: 105%;
+  max-width: 500px;
+  height: auto;
+    padding: 15px 5px;
     border: none;
     border-radius: 5px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .search-txt {
-position: absolute;
+/* position: absolute;
 top: 50%;
 left: 35%;
 transform: translate(-50%,-50%);
 background: #2f3640;
 height: 40px;
 border-radius: 40px;
-padding: 10px;
+padding: 10px; */
 }
 
 .searchbtn {
 	color:black; 
 	float: right;
-	width: 90px;
-	height: 60px;
+	width: 110px;
+	height: 70px;
 	border-radius: 50%;
 	display: flex;
 	justify-content: center;
+  
 }
 
 .search-box a{
 
-	color:red; 
+  color:red; 
 	float: right;
 	width: 40px;
 	height: 40px;
@@ -408,12 +425,17 @@ padding: 10px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	
+
 }
 
 .Searchbox{
-  width: 680px;
+  /* width: 100%; 
+  max-width: 680px; 
+  height: 100%;
+  max-height: 60px; */ 
+  width: 680px; 
   height: 60px;
+
 }
 
 .Searchbox::placeholder{
@@ -435,8 +457,24 @@ input{
 }
 input[type = "text"] {
 	background: #fff;
-  padding: 10px;
 }
+
+
+
+NEW SEARCH BOX CSS
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .forumbtn{
@@ -450,13 +488,9 @@ input[type = "text"] {
   cursor: pointer;
 }
 
-
-
-
-
 /*Form Styles*/
 
-input[type=text1], textarea{
+.cinput[type=text1], textarea{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -496,8 +530,6 @@ main{
     margin-right: 8rem;
 }
 
-
-
 .loginbox{
   width: 400px;
   height: 460px;
@@ -534,7 +566,7 @@ main{
   margin-bottom: 40px;
 }
 
-.loginbox input[type="text3"],[type = "password"]
+.loginbox input[type="text"], .loginbox input[type = "password"]
 {
   border: none;
   border-bottom: 1px solid #fff;
@@ -606,7 +638,7 @@ main{
     margin-bottom: 20px;
   }
   
-  .registerbox input[type="text4"],[type = "password"],[type = "email"]
+  .registerbox input[type="text"], .register input[type = "password"], .register input[type = "email"]
   {
     border: none;
     border-bottom: 1px solid #fff;
@@ -718,7 +750,8 @@ border-collapse: collapse;
 
 .ptableforum{
 margin: 0px 0% 0% 0%;
-margin-left: -2.7%;
+position: relative;
+left: -22px;
 }
 
 td {
@@ -765,7 +798,7 @@ background-color:rgb(43, 41, 87);;
 
 .tableforum{
  position: relative;
- width: 100%;
+ width: 120%;
 }
 
 
@@ -783,7 +816,7 @@ border-collapse: collapse;
 }
 
 .ptablegamepage{
-margin: 0px 0% 5px 0%;
+/* margin: 0px 0% 5px 0%; */
 margin-right: 5%;
 margin-left: 2.5%;
 }
@@ -836,26 +869,6 @@ background-color:rgb(43, 41, 87);;
   color:white;
 }
 
-
-
-#populargame {
-    width: 600px;
-    height: 500px;
-
-    /*Scale down will take the necessary specified space that is 400px x 200px without stretching the image*/
-    object-fit:scale-down;
-}
-
-#HomeGame {
-  width: 550px;
-  height: 450px;
-
-  /*Scale down will take the necessary specified space that is 400px x 200px without stretching the image*/
-  object-fit:scale-down;
-}
-
-
-
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -876,4 +889,11 @@ background-color:rgb(43, 41, 87);;
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #6c2be2; 
+}
+
+.Logo{
+  width: 100%;
+  max-width: 550px;
+  height: auto;
+  object-fit:scale-down;
 }

@@ -1,22 +1,24 @@
 function Linear(price){
      n =price.length;
-     m =price.length;
+     //arrays to store the values of price fro the database
      var x = [n];
-     var y =[m];
-     var z = [m];
-     var a = [m];
+     var y =[n];
+     var z = [n];
+     var a = [n];
      var b = x;
      var c = y;
      x1,y1,x2,y2 =0;
      slope,constant = 0
-
+     //get the sum of all the elements in the array
      for(i=0;i<n;i++)
      {
          x1 =x[i]+x1;
          y1= y[i]+y1;
      }
+     //find the mean
      x1 = x1/n;
         y1= y1/n;
+        //code for linear regression
         for(j=0;j< n;j++)
         {
             x[j] = x[j]- x1;
@@ -25,7 +27,7 @@ function Linear(price){
         for(k=0;k< n;k++)
         {
            z[k]= x[k]*x[k];
-//            y[j] = y[j] *y[j];
+
         }
         for(l=0;l< n;l++)
         {
@@ -36,12 +38,15 @@ function Linear(price){
             x2 = a[t]+x2;
             y2 = z[t] +y2;
         }
+        //equation for slope
         slope = x2/y2;
+        //to find the constant for the equation of a straight line
         constant = y1/(slope * x1);
 
         }
+   
 
-
+        // graph for the scatter plot for the prices using d3 library
         function graph(b,c){
 
             var svg = d3.select("body")

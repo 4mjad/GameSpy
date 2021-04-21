@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+  <meta charset="utf-8">
   <title>Login Page</title>
   <link rel="stylesheet" type="text/css" href="css/custom.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -14,21 +15,20 @@
   <div class="loginbox">
     <img src="https://www.pngitem.com/pimgs/m/24-248235_user-profile-avatar-login-account-fa-user-circle.png"
       class="ava" alt="backgroundImage">
-    <div class="loginbox"></div>
     <p><strong>Please fill in the boxes to login:</strong></p>
     <br>
     <br>
 
     <form method="POST" action="/loggedin">
       <label for="username"><b>Username:</b></label>
-      <input id="username" type="text3" name="username" placeholder="username" />
+      <input id="username" type="text" name="username" placeholder="username">
       <br>
       <label for="password"><b>Password:</b></label>
-      <input id="password" type="password" name="password" placeholder="password" />
+      <input id="password" type="password" name="password" placeholder="password">
       <br>
-      <input type="submit" name="submit" />
+      <input type="submit" name="submit">
       <a href="register">Don't have an account?</a>
-      <a style="float: right; font-size: 20px;"href='/'><i class="fa fa-home"></i></a>
+      <a style="float: right; font-size: 20px;" href='/'><i class="fa fa-home"></i></a>
       <!-- <br>
       <a href="/">Home</a> -->
     </form>

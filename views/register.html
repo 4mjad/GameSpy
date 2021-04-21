@@ -4,7 +4,8 @@
 
 <head>
   <title>Register Page</title>
-  <link rel="stylesheet" type="text/css" href="css/custom.css" />
+  <link rel="stylesheet" type="text/css" href="css/custom.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -12,30 +13,30 @@
   <div class="registerbox">
     <img src="https://www.pngitem.com/pimgs/m/24-248235_user-profile-avatar-login-account-fa-user-circle.png"
       class="ava2" alt="backgroundImage">
-    <div class="registerbox"></div>
     <p><strong>Please fill in the boxes to register:</strong></p>
     <br>
     <br>
 
     <form method="POST" action="/registered">
       <label for="username"><b>Username:</b></label>
-      <input id="username" type="text4" name="username" placeholder="username" />
+      <input id="username" type="text" name="username" placeholder="username">
       <br>
       <label for="firstname"><b>First Name:</b></label>
-      <input id="firstname" type="text4" name="firstname" placeholder="firstname" />
+      <input id="firstname" type="text" name="firstname" placeholder="firstname">
       <br>
       <label for="lastname"><b>Last Name:</b></label>
-      <input id="lastname" type="text4" name="lastname" placeholder="lastname" />
+      <input id="lastname" type="text" name="lastname" placeholder="lastname">
       <br>
       <label for="email"><b>Email:</b></label>
-      <input id="email" type="email" name="email" placeholder="email" />
+      <input id="email" type="email" name="email" placeholder="email">
       <br>
       <label for="password"><b>Password:</b></label>
-      <input id="password" type="password" name="password" placeholder="password" />
+      <input id="password" type="password" name="password" placeholder="password">
       <br>
       <input type="submit" name="submit" />
       <br>
-      <a href="/">Home</a>
+      <a href="login">Already have an account?</a>
+      <a style="float: right; font-size: 20px;"href='/'><i class="fa fa-home"></i></a>
     </form>
   </div>
 </body>

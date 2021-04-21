@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,16 +17,16 @@
   <h1> This is Complaint Page for Admin </h1>
    
   <ul>
-      <div class="ptable">
-      <table class="table">
-          <tr class="col">
+      <div class="ptablegamepage" style="overflow-x:auto;">
+      <table class="tablegamepage">
+          <tr class="colgamepage">
               <th>_Id</th>
               <th>Email</th>
               <th>Subject</th>
               <th>Message</th>
           </tr>
           <% availablegame.forEach(function(game){ %>
-          <tr class="wpos">
+          <tr class="wposgamepage">
               <td><%= game._id %></td>
               <td><%= game.Email %></td>
               <td><%= game.Subject %></td>
@@ -34,7 +34,7 @@
           </tr>
           <% }) %>
           </table>
-          </div>
+        </div>
   </ul>
 
    <form class="centered" method="POST" action="/deleted">

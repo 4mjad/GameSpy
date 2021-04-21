@@ -55,40 +55,40 @@
 
 	<!-- Main Content -->
 	<main>
-        <form class="centered" method="POST" action="/MessageAdded">
+		<form class="centered" method="POST" action="/MessageAdded">
 			<div class="form-group1">
 				<label for="message">Message: </label>
 				<!-- <input id ="message" name = "message" placeholder="message"> -->
 				<textarea rows="5" cols="5" name="message" id="message"
 					placeholder="Please write your message to the Forum. do not use any profanity or negative language."></textarea>
 			</div>
-			<button class = "button forumbtn"  type="submit1">Submit</button>
+			<button class="button forumbtn" type="submit1">Submit</button>
 		</form>
-		    <ul> 
-             <div class="ptableforum" style="overflow-x:auto;">
-              <table class="tableforum" style="width: 100%;">
-                <tr class="colforum">
-                  <th>Message Date</th>
-                  <th>User</th>
-                  <th>Message</th>
-                </tr>
-                <% availablemessage.forEach(function(message){ %>
-                  <tr class="wposforum">
-                    <td>
-                        <%= message.TimeDate %></a>
-                    </td>
-                    <td>
-                        <%= message.username %>
-                    </td>
-                    <td>
-                        <%= message.message %>
-                      </td>
-                  </tr>
-                  <% }) %>
-              </table>
-        </div> 
-         </ul> 
-		</main>
+		<ul>
+			<div class="ptableforum" style="overflow-x:auto;">
+				<table class="tableforum" style="width: 100%;">
+					<tr class="colforum">
+						<th>Message Date</th>
+						<th>User</th>
+						<th>Message</th>
+					</tr>
+					<% availablemessage.forEach(function(message){ %>
+						<tr class="wposforum">
+							<td>
+								<%= message.TimeDate %></a>
+							</td>
+							<td>
+								<%= message.username %>
+							</td>
+							<td>
+								<%= message.message %>
+							</td>
+						</tr>
+						<% }) %>
+				</table>
+			</div>
+		</ul>
+	</main>
 </body>
 
 

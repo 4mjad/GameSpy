@@ -30,9 +30,6 @@
 						<a class="nav-link" href="/">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/Game">All Games</a>
-					  </li>
-					<li class="nav-item">
 						<a class="nav-link" href="populargames">Popular Games</a>
 					</li>
 					<li class="nav-item">
@@ -58,21 +55,6 @@
 
 	<!-- Main Content -->
 	<main>
-        <!-- <form method="POST" action="/tweetAdded">
-            <label>Username: </label>
-            <input id="userName" type="text" name="userName" placeholder="username" required />
-            <br>
-            <label>Message:</label>
-            <br>
-            <textarea rows="40" cols="50" id="message" name="message"/>
-            <br>
-            <input type="submit" value="send" />
-            </form>
-           
-		</form> -->
-
-
-
         <form class="centered" method="POST" action="/MessageAdded">
 			<div class="form-group1">
 				<label for="message">Message: </label>
@@ -82,27 +64,7 @@
 			</div>
 			<button class = "button forumbtn"  type="submit1">Submit</button>
 		</form>
-		<!-- <ul>
-			<div class="ptablegamepage" style="overflow-x:auto;">
-			<table class="tablegamepage">
-				<tr class="colgamepage">
-					<th>Message Date</th>
-					<th>User</th>
-					<th>Message</th>
-				</tr>
-				<% availablemessage.forEach(function(message){ %>
-				<tr class="wposgamepage">
-					<td><%= message.TimeDate %></td>
-					<td><%= message.username %></td>
-					<td><%= message.message %></td>
-				</tr>
-				<% }) %>
-				</table>
-			  </div>
-		</ul> -->
-
-		         <ul> 
-			<!-- <div style="overflow-x:auto;"> -->
+		    <ul> 
              <div class="ptableforum" style="overflow-x:auto;">
               <table class="tableforum" style="width: 100%;">
                 <tr class="colforum">
@@ -125,7 +87,6 @@
                   <% }) %>
               </table>
         </div> 
-	<!-- </div> -->
          </ul> 
 		</main>
 </body>

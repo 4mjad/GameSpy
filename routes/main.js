@@ -37,23 +37,6 @@ module.exports = function (app) // this file has been exported as a function
     });
   });
 
-  //////////////////////------------------------------- GAME PAGE -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
-
-  app.get('/Game', function (req, res) { // get request to list page
-    var MongoClient = require('mongodb').MongoClient;
-    const url = "mongodb+srv://GameSpy:gamespy123@gamespy.inxg2.mongodb.net/test";
-    MongoClient.connect(url, function (err, client) {
-      var db = client.db('GameSpy');
-      db.collection('ALL').find().toArray((findErr, results) => { // produces all available books
-        if (findErr) throw findErr;
-        else
-          res.render('Game.ejs', { pagetitle: "Game", availablegame: results }); //diplays all books in the books collection of the database to the user
-        client.close();
-      });
-    });
-  })
-
-
   //////////////////////------------------------------- POPULAR GAMES PAGE -----------------------------------\\\\\\\\\\\\\\\\\\\\\\\\
 
   app.get('/populargames', function (req, res) {

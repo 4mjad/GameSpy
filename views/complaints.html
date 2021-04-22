@@ -50,32 +50,36 @@
 	</nav>
 
 	<!--Page Name/Header-->
-	<h1 class="centred">Complaints</h1>
+	<h1>Complaints</h1>
+	<br>
+	<br>
 
 
 	<!-- Main Content -->
 	<main>
 		<!--Code is from Group project-->
 
-		<form class="centered" method="POST" action="/Complained">
 		<div class="complaintsform">
-			<div class="form-group1">
-				<label for="email">Email: </label>
-				<input type="text" id="email" name="email" placeholder="Enter your email"><br />
-			</div>
-			<div class="form-group1">
-				<label for="subject">Subject: </label>
-				<input type="text" id="subject" name="subject" placeholder="Enter the subject">
-			</div>
-			<div class="form-group1">
-				<label for="message">Message: </label>
-				<!-- <input id ="message" name = "message" placeholder="message"> -->
-				<textarea rows="10" cols="50" name="message" id="message"
-					placeholder="Please write your complaint. Do not use any profanity or negative language."></textarea>
-			</div>
-			<button class = "button forumbtn"  type="submit">Submit</button>
+			<form class="centered" method="POST" action="/Complained">
+				<div class="form-group1">
+					<label for="email">Email: </label>
+					<input type="text" id="email" name="email" placeholder="Enter your email" required><br />
+				</div>
+				<div class="form-group1">
+					<label for="subject">Subject: </label>
+					<input type="text" id="subject" name="subject" placeholder="Enter the subject" required>
+				</div>
+				<div class="form-group1">
+					<label for="message">Message: </label>
+					<!-- <input id ="message" name = "message" placeholder="message"> -->
+					<textarea rows="10" cols="50" name="message" id="message"
+						placeholder="Please write your complaint. Do not use any profanity or negative language."
+						required></textarea>
+				</div>
+				<button class="button forumbtn" type="submit">Submit</button>
+
+			</form>
 		</div>
-		</form>
 	</main>
 </body>
 

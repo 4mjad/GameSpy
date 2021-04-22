@@ -1,43 +1,39 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-  <title>Register Page</title>
-  <link rel="stylesheet" type="text/css" href="css/custom.css">
+  <meta charset="utf-8">
+  <title>Register</title>
+  <link rel="stylesheet" href="css/custom.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-  <h1>Welcome To The Register Page</h1>
+  <h1>Register</h1>
   <div class="registerbox">
     <img src="https://www.pngitem.com/pimgs/m/24-248235_user-profile-avatar-login-account-fa-user-circle.png"
-      class="ava2" alt="backgroundImage">
-    <p><strong>Please fill in the boxes to register:</strong></p>
-    <br>
-    <br>
+      class="registerAva" alt="RegisterAva">
+    <h3>Fill in the form to register</h3>
 
     <form method="POST" action="/registered">
-      <label for="username"><b>Username:</b></label>
-      <input id="username" type="text" name="username" placeholder="username">
-      <br>
-      <label for="firstname"><b>First Name:</b></label>
-      <input id="firstname" type="text" name="firstname" placeholder="firstname">
-      <br>
-      <label for="lastname"><b>Last Name:</b></label>
-      <input id="lastname" type="text" name="lastname" placeholder="lastname">
-      <br>
-      <label for="email"><b>Email:</b></label>
-      <input id="email" type="email" name="email" placeholder="email">
-      <br>
-      <label for="password"><b>Password:</b></label>
-      <input id="password" type="password" name="password" placeholder="password">
-      <br>
-      <input type="submit" name="submit" />
-      <br>
+      <p>Username </p>
+      <input type="text" id="username" name="username" placeholder="Enter Username" required>
+      <p>Firstname </p>
+      <input type="text" id="firstname" name="firstname" placeholder="Enter Firstname" required>
+      <p>Lastname </p>
+      <input type="text" id="lastname" name="lastname" placeholder="Enter Lastname" required>
+      <p>Email</p>
+      <input type="email" id="email" name="email" placeholder="Enter Email" required>
+      <p>Password</p>
+      <input type="password" name="password" id="password" placeholder="Minimum Length Of 8" required>
+
+      <input type="submit" name="submit" value="Register">
       <a href="login">Already have an account?</a>
       <a style="float: right; font-size: 20px;" href='/'><i class="fa fa-home"></i></a>
     </form>
+    <br>
+    <br>
+    <br>
   </div>
 </body>
 

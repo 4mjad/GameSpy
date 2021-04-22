@@ -4,29 +4,22 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Login Page</title>
-  <link rel="stylesheet" type="text/css" href="css/custom.css">
+  <title>Login</title>
+  <link rel="stylesheet" href="css/custom.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-  <h1>Login Page</h1>
-  <br>
+  <h1>Login</h1>
   <div class="loginbox">
-    <img src="https://www.pngitem.com/pimgs/m/24-248235_user-profile-avatar-login-account-fa-user-circle.png"
-      class="ava" alt="backgroundImage">
-    <p><strong>Please fill in the boxes to login:</strong></p>
-    <br>
-    <br>
-
+    <img src="images/LoginUser.jpeg" class="loginAva" alt="LoginAvatar">
+    <h3>Fill in the boxes to login</h3>
     <form method="POST" action="/loggedin">
-      <label for="username"><b>Username:</b></label>
-      <input id="username" type="text" name="username" placeholder="username">
-      <br>
-      <label for="password"><b>Password:</b></label>
-      <input id="password" type="password" name="password" placeholder="password">
-      <br>
-      <input type="submit" name="submit">
+      <p>Username</p>
+      <input type="text" name="username" placeholder="Enter Username" required>
+      <p>Password</p>
+      <input type="password" name="password" id="password" placeholder="Enter Password" required>
+      <input type="submit" name="submit" value="Login">
       <a href="register">Don't have an account?</a>
       <a style="float: right; font-size: 20px;" href='/'><i class="fa fa-home"></i></a>
     </form>

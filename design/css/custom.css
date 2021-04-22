@@ -11,7 +11,7 @@ h1,h2,h3,p,h4,h5{
 
 h1{
   text-align: center;
-  font-family: 'Poppins', sans-serif;
+  font-family: sans-serif;
   margin-top: 20px;
 }
 
@@ -368,7 +368,7 @@ figure {
     left: 50%; */
     /* transform: translate(-50%,-140%); */
     background: rgba(0,0,0,0.6);
-    font-family: 'Comfortaa', cursive;
+    font-family: cursive;
 
     width: 100%;
     max-width: 500px;
@@ -449,7 +449,7 @@ input[type = "text"] {
 
 
 .loginbox{
-  font-family: 'Poppins', sans-serif;
+  font-family: sans-serif;
   width: 400px;
   height: 460px;
   background: rgb(133, 133, 133);
@@ -544,7 +544,7 @@ input[type = "text"] {
 
 
 .registerbox{
-  font-family: 'Poppins', sans-serif;
+  font-family: sans-serif;
   width: 400px;
   height: 650px;
   background: rgb(133, 133, 133);
